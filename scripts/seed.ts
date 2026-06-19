@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs'
-import { connectDB } from '../lib/mongodb/client.js'
-import { User } from '../models/User.js'
+import { connectDB } from '../lib/mongodb/client'
+import { User } from '../models/User'
 
 async function seed() {
   await connectDB()
