@@ -9,10 +9,6 @@ declare global {
 
 const MONGODB_URL = process.env.MONGODB_URL
 
-if (!MONGODB_URL) {
-  throw new Error('Please define MONGODB_URL in your .env file')
-}
-
 const cached = global.mongoose || { conn: null, promise: null }
 
 if (!global.mongoose) {
@@ -20,6 +16,10 @@ if (!global.mongoose) {
 }
 
 export async function connectDB() {
+  if (!MONGODB_URL) {
+    throw new Error('Please define MONGODB_URL in your .env file')
+  }
+
   if (cached.conn) {
     return cached.conn
   }
@@ -29,7 +29,7 @@ export async function connectDB() {
       bufferCommands: true,
     }
 
-    cached.promise = mongoose.connect(MONGODB_URL!, opts).then((mongoose) => {
+    cached.promise = mongoose.connect(MONGODB_URL, opts).then((mongoose) => {
       console.log('MongoDB connected successfully')
       return mongoose.connection
     })
