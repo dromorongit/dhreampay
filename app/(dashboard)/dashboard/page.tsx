@@ -60,7 +60,7 @@ async function getDashboardData(): Promise<DashboardSummary & { chartData: Chart
     Exception.countDocuments({ status: 'OPEN' }),
     Transaction.countDocuments({ isVIP: true }),
     ReconciliationJob.find().sort({ startedAt: -1 }).limit(5).lean(),
-    Exception.find({ status: 'OPEN' }).sort({ createdAt: -1 }).limit(5).populate('transactionId').lean(),
+    Exception.find({ status: 'OPEN' }).sort({ createdAt: -1 }).limit(5).lean(),
   ])
 
   const sevenDaysAgo = new Date()
@@ -120,7 +120,7 @@ const serializeDate = (date: Date | string | undefined | null): string | undefin
     })),
     recentExceptions: recentExceptions.map(exc => ({
       _id: exc._id?.toString() || '',
-      transactionId: typeof exc.transactionId === 'string' ? exc.transactionId : (exc.transactionId as any)?._id?.toString() || '',
+      transactionId: exc.transactionId?.toString() || '',
       exceptionType: exc.exceptionType,
       reason: exc.reason || '',
       severity: exc.severity,
