@@ -7,6 +7,8 @@ import { TransactionChart } from '@/components/dashboard/TransactionChart'
 import { RecentJobs } from '@/components/dashboard/RecentJobs'
 import { RecentExceptions } from '@/components/dashboard/RecentExceptions'
 import { CreditCard, CheckCircle, AlertTriangle, Star } from 'lucide-react'
+import { connectDB } from '@/lib/mongodb/client'
+import { Transaction, Exception, ReconciliationJob } from '@/models'
 
 interface ReconciliationJob {
   _id: string
@@ -50,22 +52,60 @@ interface DashboardSummary {
 }
 
 async function getDashboardData(): Promise<DashboardSummary & { chartData: ChartData[] }> {
-  const [summaryRes, chartRes] = await Promise.all([
-    fetch(`${process.env.NEXT_PUBLIC_APP_URL || ''}/api/dashboard/summary`),
-    fetch(`${process.env.NEXT_PUBLIC_APP_URL || ''}/api/dashboard/chart`),
+  await connectDB()
+
+  const [totalTransactions, totalMatched, totalExceptions, totalVIP, recentJobs, recentExceptions] = await Promise.all([
+    Transaction.countDocuments(),
+    Transaction.countDocuments({ status: 'MATCHED' }),
+    Exception.countDocuments({ status: 'OPEN' }),
+    Transaction.countDocuments({ isVIP: true }),
+    ReconciliationJob.find().sort({ startedAt: -1 }).limit(5).lean(),
+    Exception.find({ status: 'OPEN' }).sort({ createdAt: -1 }).limit(5).populate('transactionId').lean(),
   ])
 
-  const summary = await summaryRes.json()
-  const chartData = await chartRes.json()
+  const sevenDaysAgo = new Date()
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
+
+  const pipeline = [
+    {
+      $match: {
+        transactionDate: { $gte: sevenDaysAgo },
+      },
+    },
+    {
+      $group: {
+        _id: {
+          date: {
+            $dateToString: { format: '%Y-%m-%d', date: '$transactionDate' },
+          },
+          source: '$source',
+        },
+        count: { $sum: 1 },
+      },
+    },
+    {
+      $sort: { '_id.date': 1 },
+    },
+  ] as any
+
+  const results = await Transaction.aggregate(pipeline)
+  const chartData = results.reduce((acc: any, item: any) => {
+    const date = item._id.date
+    if (!acc[date]) {
+      acc[date] = { date, BANK: 0, VISA: 0 }
+    }
+    acc[date][item._id.source] = item.count
+    return acc
+  }, {})
 
   return {
-    totalTransactions: summary.totalTransactions || 0,
-    totalMatched: summary.totalMatched || 0,
-    totalExceptions: summary.totalExceptions || 0,
-    totalVIP: summary.totalVIP || 0,
-    recentJobs: summary.recentJobs || [],
-    recentExceptions: summary.recentExceptions || [],
-    chartData: chartData || [],
+    totalTransactions,
+    totalMatched,
+    totalExceptions,
+    totalVIP,
+    recentJobs: recentJobs as unknown as ReconciliationJob[],
+    recentExceptions: recentExceptions as unknown as Exception[],
+    chartData: Object.values(chartData),
   }
 }
 
