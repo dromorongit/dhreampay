@@ -20,10 +20,9 @@ export async function GET() {
   const recentExceptions = await Exception.find({ status: 'OPEN' })
     .sort({ createdAt: -1 })
     .limit(5)
-    .populate('transactionId')
     .lean()
 
-  return Response.json({
+  const data = {
     totalTransactions,
     totalMatched,
     totalExceptions,
@@ -42,7 +41,7 @@ export async function GET() {
     })),
     recentExceptions: recentExceptions.map(exc => ({
       _id: exc._id?.toString() || '',
-      transactionId: typeof exc.transactionId === 'string' ? exc.transactionId : (exc.transactionId as any)?._id?.toString() || '',
+      transactionId: exc.transactionId?.toString() || '',
       exceptionType: exc.exceptionType,
       reason: exc.reason || '',
       severity: exc.severity,
@@ -52,5 +51,7 @@ export async function GET() {
       resolvedAt: serializeDate(exc.resolvedAt),
       reconciliationJobId: exc.reconciliationJobId?.toString() || '',
     })),
-  })
+  }
+
+  return Response.json(JSON.parse(JSON.stringify(data)))
 }

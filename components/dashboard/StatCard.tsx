@@ -1,14 +1,22 @@
 'use client'
 
-import { LucideIcon } from 'lucide-react'
+import { CreditCard, CheckCircle, AlertTriangle, Star, BarChart3 } from 'lucide-react'
 
 interface StatCardProps {
   title: string
   value: number | string
-  icon: LucideIcon
+  icon: 'CreditCard' | 'CheckCircle' | 'AlertTriangle' | 'Star' | 'BarChart3'
   color?: 'blue' | 'green' | 'red' | 'gold' | 'purple' | 'info'
   percentageChange?: number
   prefix?: string
+}
+
+const iconMap = {
+  CreditCard,
+  CheckCircle,
+  AlertTriangle,
+  Star,
+  BarChart3,
 }
 
 const colorClasses = {
@@ -20,7 +28,9 @@ const colorClasses = {
   info: 'bg-dhreampay-info',
 }
 
-export function StatCard({ title, value, icon: Icon, color = 'blue', percentageChange, prefix }: StatCardProps) {
+export function StatCard({ title, value, icon, color = 'blue', percentageChange, prefix }: StatCardProps) {
+  const Icon = iconMap[icon]
+
   return (
     <div className='bg-dhreampay-card border border-dhreampay-border rounded-lg p-6'>
       <div className='flex items-center justify-between'>

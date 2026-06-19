@@ -6,7 +6,6 @@ import { StatCard } from '@/components/dashboard/StatCard'
 import { TransactionChart } from '@/components/dashboard/TransactionChart'
 import { RecentJobs } from '@/components/dashboard/RecentJobs'
 import { RecentExceptions } from '@/components/dashboard/RecentExceptions'
-import { CreditCard, CheckCircle, AlertTriangle, Star } from 'lucide-react'
 import { connectDB } from '@/lib/mongodb/client'
 import { Transaction, Exception, ReconciliationJob } from '@/models'
 
@@ -98,10 +97,10 @@ async function getDashboardData(): Promise<DashboardSummary & { chartData: Chart
     return acc
   }, {})
 
-const serializeDate = (date: Date | string | undefined | null): string | undefined =>
+  const serializeDate = (date: Date | string | undefined | null): string | undefined =>
     date ? (date instanceof Date ? date.toISOString() : date) : undefined
 
-  return {
+  const data = {
     totalTransactions,
     totalMatched,
     totalExceptions,
@@ -132,6 +131,8 @@ const serializeDate = (date: Date | string | undefined | null): string | undefin
     })),
     chartData: Object.values(chartData),
   }
+
+  return JSON.parse(JSON.stringify(data))
 }
 
 export default async function DashboardPage() {
@@ -150,25 +151,25 @@ export default async function DashboardPage() {
           <StatCard
             title="Total Transactions"
             value={dashboardData.totalTransactions}
-            icon={CreditCard}
+            icon="CreditCard"
             color="blue"
           />
           <StatCard
             title="Matched"
             value={dashboardData.totalMatched}
-            icon={CheckCircle}
+            icon="CheckCircle"
             color="green"
           />
           <StatCard
             title="Exceptions"
             value={dashboardData.totalExceptions}
-            icon={AlertTriangle}
+            icon="AlertTriangle"
             color="red"
           />
           <StatCard
             title="VIP Transactions"
             value={dashboardData.totalVIP}
-            icon={Star}
+            icon="Star"
             color="gold"
           />
         </div>
