@@ -98,7 +98,7 @@ async function getDashboardData(): Promise<DashboardSummary & { chartData: Chart
     return acc
   }, {})
 
-  const serializeDate = (date: Date | string | undefined) => 
+const serializeDate = (date: Date | string | undefined | null): string | undefined =>
     date ? (date instanceof Date ? date.toISOString() : date) : undefined
 
   return {
@@ -107,28 +107,28 @@ async function getDashboardData(): Promise<DashboardSummary & { chartData: Chart
     totalExceptions,
     totalVIP,
     recentJobs: recentJobs.map(job => ({
-      _id: job._id.toString(),
-      jobName: job.jobName,
+      _id: job._id?.toString() || '',
+      jobName: job.jobName || '',
       status: job.status,
-      totalTransactions: job.totalTransactions,
-      totalMatched: job.totalMatched,
-      totalUnmatched: job.totalUnmatched,
-      totalVIP: job.totalVIP,
+      totalTransactions: job.totalTransactions || 0,
+      totalMatched: job.totalMatched || 0,
+      totalUnmatched: job.totalUnmatched || 0,
+      totalVIP: job.totalVIP || 0,
       startedAt: serializeDate(job.startedAt),
       completedAt: serializeDate(job.completedAt),
-      triggeredBy: job.triggeredBy.toString(),
+      triggeredBy: job.triggeredBy?.toString() || '',
     })),
     recentExceptions: recentExceptions.map(exc => ({
-      _id: exc._id.toString(),
-      transactionId: typeof exc.transactionId === 'string' ? exc.transactionId : exc.transactionId?._id?.toString() || '',
+      _id: exc._id?.toString() || '',
+      transactionId: typeof exc.transactionId === 'string' ? exc.transactionId : (exc.transactionId as any)?._id?.toString() || '',
       exceptionType: exc.exceptionType,
-      reason: exc.reason,
+      reason: exc.reason || '',
       severity: exc.severity,
       status: exc.status,
       resolvedBy: exc.resolvedBy?.toString(),
       resolutionNote: exc.resolutionNote,
       resolvedAt: serializeDate(exc.resolvedAt),
-      reconciliationJobId: exc.reconciliationJobId.toString(),
+      reconciliationJobId: exc.reconciliationJobId?.toString() || '',
     })),
     chartData: Object.values(chartData),
   }
