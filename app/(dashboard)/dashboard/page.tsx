@@ -98,13 +98,38 @@ async function getDashboardData(): Promise<DashboardSummary & { chartData: Chart
     return acc
   }, {})
 
+  const serializeDate = (date: Date | string | undefined) => 
+    date ? (date instanceof Date ? date.toISOString() : date) : undefined
+
   return {
     totalTransactions,
     totalMatched,
     totalExceptions,
     totalVIP,
-    recentJobs: recentJobs as unknown as ReconciliationJob[],
-    recentExceptions: recentExceptions as unknown as Exception[],
+    recentJobs: recentJobs.map(job => ({
+      _id: job._id.toString(),
+      jobName: job.jobName,
+      status: job.status,
+      totalTransactions: job.totalTransactions,
+      totalMatched: job.totalMatched,
+      totalUnmatched: job.totalUnmatched,
+      totalVIP: job.totalVIP,
+      startedAt: serializeDate(job.startedAt),
+      completedAt: serializeDate(job.completedAt),
+      triggeredBy: job.triggeredBy.toString(),
+    })),
+    recentExceptions: recentExceptions.map(exc => ({
+      _id: exc._id.toString(),
+      transactionId: typeof exc.transactionId === 'string' ? exc.transactionId : exc.transactionId?._id?.toString() || '',
+      exceptionType: exc.exceptionType,
+      reason: exc.reason,
+      severity: exc.severity,
+      status: exc.status,
+      resolvedBy: exc.resolvedBy?.toString(),
+      resolutionNote: exc.resolutionNote,
+      resolvedAt: serializeDate(exc.resolvedAt),
+      reconciliationJobId: exc.reconciliationJobId.toString(),
+    })),
     chartData: Object.values(chartData),
   }
 }

@@ -12,7 +12,7 @@ async function seed() {
     process.exit(0)
   }
 
-  const hashedPassword = await bcrypt.hash('Admin', 10)
+  const hashedPassword = await bcrypt.hash('Admin@1234', 10)
 
   const admin = await User.create({
     name: 'System Administrator',
