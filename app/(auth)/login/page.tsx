@@ -2,7 +2,6 @@
 
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { Eye, EyeOff } from 'lucide-react'
 
