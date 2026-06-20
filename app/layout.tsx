@@ -1,6 +1,7 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { SessionProvider } from '@/components/session-provider'
+import { Toaster } from 'react-hot-toast'
 
 export const metadata: Metadata = {
   title: 'DhreamPay',
@@ -17,6 +18,7 @@ export default function RootLayout({
       <body className="min-h-screen bg-gray-50">
         <SessionProvider>
           {children}
+          <Toaster position="top-right" />
         </SessionProvider>
       </body>
     </html>
