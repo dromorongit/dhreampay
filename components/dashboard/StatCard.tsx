@@ -1,5 +1,3 @@
-'use client'
-
 import { CreditCard, CheckCircle, AlertTriangle, Star, BarChart3 } from 'lucide-react'
 
 interface StatCardProps {

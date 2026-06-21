@@ -16,6 +16,8 @@ import * as Papa from 'papaparse'
 import * as XLSX from 'xlsx'
 import { toast } from 'react-hot-toast'
 
+export const dynamic = 'force-dynamic'
+
 type Step = 'file' | 'source-type' | 'mapping' | 'preview' | 'import' | 'complete'
 type Source = 'BANK' | 'VISA'
 type VIPType = 'regular' | 'vip' | 'mixed'
