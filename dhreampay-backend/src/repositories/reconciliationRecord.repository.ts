@@ -9,6 +9,13 @@ interface PaginatedReconciliationRecords {
   limit: number
 }
 
+interface ReconciliationRecordFilter {
+  $or?: Array<{ bankTransactionId?: Types.ObjectId; visaTransactionId?: Types.ObjectId }>
+  settlementBatchId?: Types.ObjectId | typeof Types.ObjectId
+  matchStatus?: string
+  matchType?: string
+}
+
 async function create(data: CreateReconciliationRecordDTO): Promise<IReconciliationRecord> {
   const record = new ReconciliationRecordModel(data)
   return record.save()
@@ -18,7 +25,7 @@ async function findById(id: Types.ObjectId): Promise<IReconciliationRecord | nul
   return ReconciliationRecordModel.findById(id).exec()
 }
 
-async function findOne(filter: Partial<IReconciliationRecord>): Promise<IReconciliationRecord | null> {
+async function findOne(filter: ReconciliationRecordFilter | Partial<IReconciliationRecord>): Promise<IReconciliationRecord | null> {
   return ReconciliationRecordModel.findOne(filter).exec()
 }
 

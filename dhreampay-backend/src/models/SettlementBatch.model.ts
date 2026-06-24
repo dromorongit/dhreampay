@@ -9,9 +9,9 @@ const SettlementBatchSchema = new Schema<ISettlementBatch>({
   totalAmount: { type: Number, required: true, default: 0 },
   totalCount: { type: Number, required: true, default: 0 },
   status: { type: String, enum: ['pending', 'processing', 'completed', 'failed'], required: true, default: 'pending' },
-  // uploadedBy: will become a User ref once auth is built in a later phase
   uploadedBy: { type: String, required: true },
-  errorMessage: { type: String }
+  errorMessage: { type: String },
+  reconciledAt: { type: Date }
 }, {
   timestamps: true
 })

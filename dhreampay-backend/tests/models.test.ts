@@ -65,7 +65,7 @@ describe('Transaction Repository', () => {
     })).rejects.toThrow()
   })
 
-  it('should enforce unique index on transactionId', async () => {
+  it('should enforce unique index on transactionId within same source', async () => {
     await create({
       transactionId: 'TXN-DUP',
       source: 'bank',
@@ -79,7 +79,7 @@ describe('Transaction Repository', () => {
 
     await expect(create({
       transactionId: 'TXN-DUP',
-      source: 'visa',
+      source: 'bank',
       transactionType: 'refund',
       cardNumberMasked: '5678',
       amount: 50,

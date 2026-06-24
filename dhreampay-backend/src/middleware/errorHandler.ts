@@ -6,6 +6,8 @@ import { env } from '../config/env.js'
 interface CustomError extends Error {
   statusCode?: number
   status?: number
+  code?: number
+  keyValue?: Record<string, unknown>
 }
 
 function errorHandler(
@@ -14,6 +16,14 @@ function errorHandler(
   res: Response,
   _next: NextFunction
 ): Response<ErrorResponse> {
+  if (err.code === 11000 && err.keyValue !== undefined) {
+    const field = Object.keys(err.keyValue)[0]
+    return res.status(409).json({
+      success: false,
+      message: `${field} already exists`
+    })
+  }
+
   const statusCode = err.statusCode ?? err.status ?? 500
   const message = err.message ?? 'Internal Server Error'
 

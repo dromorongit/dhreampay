@@ -15,6 +15,7 @@ export interface ISettlementBatch {
   status: BatchStatus
   uploadedBy: string
   errorMessage?: string
+  reconciledAt?: Date
   createdAt: Date
   updatedAt: Date
 }
