@@ -1,10 +1,6 @@
-import { auth } from '../../../lib/auth/authOptions';
-import { NextRequest, NextResponse } from 'next/server';
+import { handlers } from '@/lib/auth/authOptions';
 
-export async function GET(request: NextRequest) {
-  return auth(request, NextResponse);
-}
+export const runtime = 'nodejs';
 
-export async function POST(request: NextRequest) {
-  return auth(request, NextResponse);
-}
+export const GET = handlers.GET;
+export const POST = handlers.POST;

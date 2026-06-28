@@ -2,7 +2,25 @@ import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { loginUser } from '../api/auth';
 import type { NextAuthOptions } from 'next-auth';
+import type { DefaultSession } from 'next-auth';
 import type { UserRole } from '../../types/api';
+
+declare module 'next-auth' {
+  interface Session {
+    user: {
+      id: string;
+      role: UserRole;
+      accessToken: string;
+    } & DefaultSession['user'];
+  }
+
+  interface JWT {
+    id: string;
+    role: UserRole;
+    accessToken: string;
+    refreshToken: string;
+  }
+}
 
 interface CustomUser {
   id: string;
@@ -74,9 +92,4 @@ export const authOptions: NextAuthOptions = {
   },
 };
 
-const nextAuth = NextAuth(authOptions);
-
-export const handlers = nextAuth.handlers;
-export const signIn = nextAuth.signIn;
-export const signOut = nextAuth.signOut;
-export const auth = nextAuth.auth;
+export const { handlers, signIn, signOut, auth } = NextAuth(authOptions);
