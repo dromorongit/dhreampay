@@ -1,7 +1,8 @@
 import { auth } from './lib/auth/authOptions';
 import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
-export async function middleware(req) {
+export async function middleware(req: NextRequest) {
   const session = await auth();
   if (!session) {
     return NextResponse.redirect(new URL('/login', req.url));

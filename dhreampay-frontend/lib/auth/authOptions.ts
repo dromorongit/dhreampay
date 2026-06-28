@@ -11,6 +11,8 @@ declare module 'next-auth' {
       id: string;
       role: UserRole;
       accessToken: string;
+      name: string;
+      email: string;
     };
   }
 
@@ -19,6 +21,8 @@ declare module 'next-auth' {
     role: UserRole;
     accessToken: string;
     refreshToken: string;
+    name: string;
+    email: string;
   }
 }
 
@@ -72,6 +76,8 @@ export const authOptions: NextAuthConfig = {
         token.role = customUser.role;
         token.accessToken = customUser.accessToken;
         token.refreshToken = customUser.refreshToken;
+        token.name = customUser.name;
+        token.email = customUser.email;
       }
       return token;
     },
@@ -80,6 +86,8 @@ export const authOptions: NextAuthConfig = {
         session.user.id = token.id as string;
         session.user.role = token.role as UserRole;
         session.user.accessToken = token.accessToken as string;
+        session.user.name = token.name as string;
+        session.user.email = token.email as string;
       }
       return session;
     },
