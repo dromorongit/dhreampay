@@ -1,4 +1,4 @@
-import { handlers } from '@/lib/auth/authOptions';
+import { handlers } from '../../../../lib/auth/authOptions';
 
 export const runtime = 'nodejs';
 
