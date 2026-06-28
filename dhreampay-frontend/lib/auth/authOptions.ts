@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { loginUser } from '../api/auth';
-import type { NextAuthOptions } from 'next-auth';
+import type { NextAuthConfig } from 'next-auth';
 import type { DefaultSession } from 'next-auth';
 import type { UserRole } from '../../types/api';
 
@@ -11,7 +11,7 @@ declare module 'next-auth' {
       id: string;
       role: UserRole;
       accessToken: string;
-    } & DefaultSession['user'];
+    };
   }
 
   interface JWT {
@@ -31,7 +31,7 @@ interface CustomUser {
   refreshToken: string;
 }
 
-export const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthConfig = {
   providers: [
     CredentialsProvider({
       name: 'credentials',
