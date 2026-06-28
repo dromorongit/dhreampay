@@ -1,8 +1,9 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { loginUser } from '../api/auth';
 import type { NextAuthConfig } from 'next-auth';
 import type { UserRole } from '../../types/api';
+
+const apiUrl = process.env.API_URL ?? process.env.NEXT_PUBLIC_API_URL ?? '';
 
 declare module 'next-auth' {
   interface Session {
@@ -48,13 +49,35 @@ export const authOptions: NextAuthConfig = {
           return null;
         }
 
-        const response = await loginUser(
-          credentials.email as string,
-          credentials.password as string
-        );
+        if (!apiUrl) {
+          console.error('API_URL is not set');
+          return null;
+        }
 
-        if (response.success && response.data) {
-          const { user, accessToken, refreshToken } = response.data;
+        const response = await fetch(`${apiUrl}/api/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: credentials.email,
+            password: credentials.password,
+          }),
+        });
+
+        if (!response.ok) {
+          return null;
+        }
+
+        const data = (await response.json()) as {
+          success: boolean;
+          data?: {
+            user: { _id: string; name: string; email: string; role: UserRole };
+            accessToken: string;
+            refreshToken: string;
+          };
+        };
+
+        if (data.success && data.data) {
+          const { user, accessToken, refreshToken } = data.data;
           return {
             id: user._id,
             name: user.name,
