@@ -35,6 +35,7 @@ interface CustomUser {
 }
 
 export const authOptions: NextAuthConfig = {
+  trustHost: true,
   providers: [
     CredentialsProvider({
       name: 'credentials',

@@ -1,4 +1,5 @@
 import { auth } from '../../../lib/auth/authOptions';
+import { redirect } from 'next/navigation';
 
 const roleColors: Record<string, string> = {
   admin: 'bg-purple-600',
@@ -10,7 +11,7 @@ export default async function DashboardPage() {
   const session = await auth();
 
   if (!session) {
-    return null;
+    redirect('/login');
   }
 
   const roleColor = roleColors[session.user.role] ?? 'bg-gray-600';
