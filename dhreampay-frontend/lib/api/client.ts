@@ -1,11 +1,8 @@
-import { ApiResponse } from '../../types/api';
+import type { ApiResponse } from '../../types/api';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? '';
 
-export async function apiRequest<T>(
-  path: string,
-  options?: RequestInit & { token?: string }
-): Promise<ApiResponse<T>> {
+export async function apiRequest<T>(path: string, options?: RequestInit & { token?: string }): Promise<ApiResponse<T>> {
   const url = `${API_BASE_URL}${path}`;
 
   const headers: Record<string, string> = {

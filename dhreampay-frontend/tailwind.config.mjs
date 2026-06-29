@@ -9,6 +9,14 @@ const config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        navy: {
+          DEFAULT: '#1e3a5f',
+          light: '#2d5a9e',
+        },
+        gold: {
+          DEFAULT: '#d4a017',
+          light: '#f0c040',
+        },
       },
     },
   },

@@ -1,5 +1,7 @@
 import { auth } from '../../lib/auth/authOptions';
 import { redirect } from 'next/navigation';
+import { Sidebar } from '../../components/layout/Sidebar';
+import { Header } from '../../components/layout/Header';
 
 export default async function DashboardLayout({
   children,
@@ -13,20 +15,12 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="flex min-h-screen bg-gray-900">
-      <aside className="w-64 bg-gray-950 p-4">
-        <nav className="text-gray-400">
-          <div className="mb-4 text-gray-500 text-xs uppercase">Navigation</div>
-          <ul className="space-y-2">
-            <li>
-              <a href="/dashboard" className="text-gray-300 hover:text-white">
-                Dashboard
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </aside>
-      <main className="flex-1 p-6">{children}</main>
+    <div className="flex min-h-screen bg-white">
+      <Sidebar userRole={session.user.role} />
+      <div className="ml-64 flex flex-col flex-1">
+        <Header pageTitle="DhreamPay" userName={session.user.name} userEmail={session.user.email} />
+        <main className="flex-1 p-6 overflow-y-auto bg-white">{children}</main>
+      </div>
     </div>
   );
 }

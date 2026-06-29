@@ -33,13 +33,13 @@ export default function LoginPage() {
 
   return (
     <div className="w-full max-w-md">
-      <div className="bg-gray-900 rounded-lg shadow-xl p-8">
-        <h1 className="text-2xl font-bold text-white mb-6 text-center">
+      <div className="bg-white border border-[#e2e8f0] border-t-4 border-t-[#d4a017] rounded-2xl shadow-lg p-8">
+        <h1 className="text-2xl font-bold text-[#1e3a5f] mb-6 text-center">
           DhreamPay
         </h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">
+            <label htmlFor="email" className="block text-sm font-medium text-[#475569] mb-1">
               Email
             </label>
             <input
@@ -49,12 +49,12 @@ export default function LoginPage() {
               onChange={(e) => setEmail(e.target.value)}
               required
               disabled={loading}
-              className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+              className="w-full px-3 py-2 bg-white border border-[#cbd5e1] rounded-md text-[#0f172a] focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] disabled:opacity-50"
               placeholder="admin@example.com"
             />
           </div>
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-1">
+            <label htmlFor="password" className="block text-sm font-medium text-[#475569] mb-1">
               Password
             </label>
             <input
@@ -64,17 +64,17 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               required
               disabled={loading}
-              className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+              className="w-full px-3 py-2 bg-white border border-[#cbd5e1] rounded-md text-[#0f172a] focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] disabled:opacity-50"
               placeholder="••••••••"
             />
           </div>
           {error && (
-            <div className="text-red-400 text-sm text-center">{error}</div>
+            <div className="text-red-600 text-sm text-center">{error}</div>
           )}
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 rounded-md text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-2 px-4 bg-[#1e3a5f] hover:bg-[#2d5a9e] rounded-md text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? 'Signing in...' : 'Sign In'}
           </button>
