@@ -1,12 +1,12 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
-import { SourceSelector } from '../../components/upload/SourceSelector';
-import { DropZone } from '../../components/upload/DropZone';
-import { IngestionResult } from '../../components/upload/IngestionResult';
-import { uploadFile } from '../../lib/api/ingestion';
+import { SourceSelector } from '../../../components/upload/SourceSelector';
+import { DropZone } from '../../../components/upload/DropZone';
+import { IngestionResult } from '../../../components/upload/IngestionResult';
+import { uploadFile } from '../../../lib/api/ingestion';
 import { useState } from 'react';
-import type { IngestionResult as IngestionResultType } from '../../types/api';
+import type { IngestionResult as IngestionResultType } from '../../../types/api';
 import { Lock } from 'lucide-react';
 import Link from 'next/link';
 
