@@ -8,7 +8,8 @@
     "start": "node dist/server.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
-    "seed:admin": "tsx src/scripts/seedAdmin.ts"
+    "seed:admin": "tsx src/scripts/seedAdmin.ts",
+    "db:fix-indexes": "tsx src/scripts/dropStaleIndexes.ts"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
