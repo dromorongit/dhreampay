@@ -12,6 +12,12 @@ export async function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    '/dashboard/:path*'
+    '/dashboard/:path*',
+    '/batches/:path*',
+    '/transactions/:path*',
+    '/reconciliation/:path*',
+    '/exceptions/:path*',
+    '/vip-accounts/:path*',
+    '/reports/:path*'
   ]
 };

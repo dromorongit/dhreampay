@@ -12,12 +12,12 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { label: 'Dashboard', href: '/dashboard', icon: <LayoutDashboard size={20} /> },
-  { label: 'Batches', href: '/dashboard/batches', icon: <FileText size={20} /> },
-  { label: 'Transactions', href: '/dashboard/transactions', icon: <ArrowLeftRight size={20} /> },
-  { label: 'Reconciliation', href: '/dashboard/reconciliation', icon: <GitMerge size={20} /> },
-  { label: 'Exceptions', href: '/dashboard/exceptions', icon: <AlertTriangle size={20} /> },
-  { label: 'VIP Accounts', href: '/dashboard/vip-accounts', icon: <Star size={20} /> },
-  { label: 'Reports', href: '/dashboard/reports', icon: <BarChart2 size={20} /> },
+  { label: 'Batches', href: '/batches', icon: <FileText size={20} /> },
+  { label: 'Transactions', href: '/transactions', icon: <ArrowLeftRight size={20} /> },
+  { label: 'Reconciliation', href: '/reconciliation', icon: <GitMerge size={20} /> },
+  { label: 'Exceptions', href: '/exceptions', icon: <AlertTriangle size={20} /> },
+  { label: 'VIP Accounts', href: '/vip-accounts', icon: <Star size={20} /> },
+  { label: 'Reports', href: '/reports', icon: <BarChart2 size={20} /> },
 ];
 
 interface SidebarProps {
@@ -35,9 +35,9 @@ export function Sidebar({ userRole }: SidebarProps) {
 
       <nav className="flex-1 px-4 py-6">
         <ul className="space-y-2">
-          {navItems.map((item) => {
-            const isActive = pathname === item.href;
-            return (
+{navItems.map((item) => {
+             const isActive = pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(item.href));
+             return (
               <li key={item.href}>
                 <Link
                   href={item.href}

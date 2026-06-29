@@ -36,12 +36,12 @@ export function OpenExceptions({ count, highSeverityCount }: OpenExceptionsProps
           </div>
         )}
 
-        <Link
-          href="/dashboard/exceptions"
-          className="inline-block text-sm text-[#1e3a5f] hover:underline"
-        >
-          View All Exceptions
-        </Link>
+<Link
+           href="/exceptions"
+           className="inline-block text-sm text-[#1e3a5f] hover:underline"
+         >
+           View All Exceptions
+         </Link>
       </div>
     </div>
   );

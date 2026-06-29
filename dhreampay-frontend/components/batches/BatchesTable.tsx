@@ -115,20 +115,20 @@ export function BatchesTable({ batches, userRole }: BatchesTableProps) {
                 </td>
                 <td className="py-3 px-4 text-center">
                   <div className="flex items-center justify-center gap-2">
-                    <Link
-                      href={`/dashboard/batches/${batch._id}`}
-                      className="text-xs text-[#1e3a5f] hover:underline"
-                    >
-                      View
-                    </Link>
-                    {userRole !== 'viewer' && batch.status === 'completed' && (
-                      <Link
-                        href={`/dashboard/reconciliation?batchId=${batch._id}`}
-                        className="text-xs text-[#1e3a5f] hover:underline"
-                      >
-                        Reconcile
-                      </Link>
-                    )}
+<Link
+                       href={`/batches/${batch._id}`}
+                       className="text-xs text-[#1e3a5f] hover:underline"
+                     >
+                       View
+                     </Link>
+                     {userRole !== 'viewer' && batch.status === 'completed' && (
+                       <Link
+                         href={`/reconciliation?batchId=${batch._id}`}
+                         className="text-xs text-[#1e3a5f] hover:underline"
+                       >
+                         Reconcile
+                       </Link>
+                     )}
                   </div>
                 </td>
               </tr>

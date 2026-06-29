@@ -45,7 +45,7 @@ export function RecentBatches({ batches }: RecentBatchesProps) {
     <div className="bg-[#f8fafc] rounded-xl p-6 border border-[#e2e8f0]">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold text-[#0f172a]">Recent Settlement Batches</h3>
-        <Link href="/dashboard/batches" className="text-sm text-[#1e3a5f] hover:underline">
+        <Link href="/batches" className="text-sm text-[#1e3a5f] hover:underline">
           View All
         </Link>
       </div>

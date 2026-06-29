@@ -112,12 +112,12 @@ export function IngestionResult({ result }: IngestionResultProps) {
         >
           Upload Another File
         </button>
-        <Link
-          href="/dashboard/batches"
-          className="px-4 py-2 text-sm font-medium text-white bg-[#1e3a5f] rounded-lg hover:bg-[#2d5a9e] transition-colors"
-        >
-          View Batch
-        </Link>
+<Link
+           href="/batches"
+           className="px-4 py-2 text-sm font-medium text-white bg-[#1e3a5f] rounded-lg hover:bg-[#2d5a9e] transition-colors"
+         >
+           View Batch
+         </Link>
       </div>
     </div>
   );
