@@ -28,3 +28,16 @@ export interface AuthResponse {
   accessToken: string;
   refreshToken: string;
 }
+
+export interface IngestionError {
+  row: number;
+  message: string;
+}
+
+export interface IngestionResult {
+  batchId: string;
+  totalRows: number;
+  successCount: number;
+  errorCount: number;
+  errors: IngestionError[];
+}
