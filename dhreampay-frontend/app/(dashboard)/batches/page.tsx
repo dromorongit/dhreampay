@@ -39,7 +39,7 @@ export default async function BatchesPage() {
         )}
       </div>
 
-      <BatchesTable batches={batches} />
+      <BatchesTable batches={batches} userRole={session.user.role} />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, type DragEvent, type ChangeEvent } from 'react';
+import { useState, useCallback, type DragEvent, type ChangeEvent, useMemo } from 'react';
 import { Upload, X } from 'lucide-react';
 
 interface DropZoneProps {
@@ -13,28 +13,35 @@ interface DropZoneProps {
 export function DropZone({ onFileSelect, accept, maxSizeMB, disabled = false }: DropZoneProps) {
   const [isDragOver, setIsDragOver] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  const validateAndSelectFile = (file: File | null) => {
-    if (!file) return;
+  const acceptedExtensions = useMemo(
+    () => accept.split(',').map((a) => a.trim().replace('.', '')),
+    [accept]
+  );
 
-    setError(null);
-    const fileExtension = file.name.split('.').pop()?.toLowerCase();
-    const acceptedExtensions = accept.split(',').map((a) => a.trim().replace('.', ''));
+  const validateAndSelectFile = useCallback(
+    (file: File | null) => {
+      if (!file) return;
 
-    if (!acceptedExtensions.includes(`.${fileExtension}`)) {
-      setError('Invalid file type. Only CSV and XLSX files are accepted.');
-      return;
-    }
+      setError(null);
+      const fileExtension = file.name.split('.').pop()?.toLowerCase() ?? '';
 
-    if (file.size > maxSizeMB * 1024 * 1024) {
-      setError(`File size exceeds ${maxSizeMB}MB limit.`);
-      return;
-    }
+      if (!acceptedExtensions.includes(fileExtension)) {
+        setError('Invalid file type. Only CSV and XLSX files are accepted.');
+        return;
+      }
 
-    setSelectedFileName(file.name);
-    onFileSelect(file);
-  };
+      if (file.size > maxSizeMB * 1024 * 1024) {
+        setError(`File size exceeds ${maxSizeMB}MB limit.`);
+        return;
+      }
+
+      setSelectedFile(file);
+      onFileSelect(file);
+    },
+    [acceptedExtensions, maxSizeMB, onFileSelect]
+  );
 
   const handleDragOver = useCallback(
     (e: DragEvent<HTMLDivElement>) => {
@@ -63,18 +70,21 @@ export function DropZone({ onFileSelect, accept, maxSizeMB, disabled = false }: 
         validateAndSelectFile(file);
       }
     },
-    [disabled]
+    [disabled, validateAndSelectFile]
   );
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0] ?? null;
-    validateAndSelectFile(file);
-  };
+  const handleInputChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0] ?? null;
+      validateAndSelectFile(file);
+    },
+    [validateAndSelectFile]
+  );
 
-  const handleClear = () => {
-    setSelectedFileName(null);
+  const handleClear = useCallback(() => {
+    setSelectedFile(null);
     setError(null);
-  };
+  }, []);
 
   return (
     <div className="space-y-2">
@@ -90,18 +100,23 @@ export function DropZone({ onFileSelect, accept, maxSizeMB, disabled = false }: 
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
       >
-        {selectedFileName ? (
-          <div className="flex items-center justify-center gap-2">
-            <span className="text-sm text-[#0f172a]">{selectedFileName}</span>
-            {!disabled && (
-              <button
-                type="button"
-                onClick={handleClear}
-                className="text-red-500 hover:text-red-700"
-              >
-                <X size={16} />
-              </button>
-            )}
+        {selectedFile ? (
+          <div className="flex flex-col items-center gap-1">
+            <div className="flex items-center justify-center gap-2">
+              <span className="text-sm text-[#0f172a]">{selectedFile.name}</span>
+              {!disabled && (
+                <button
+                  type="button"
+                  onClick={handleClear}
+                  className="text-red-500 hover:text-red-700"
+                >
+                  <X size={16} />
+                </button>
+              )}
+            </div>
+            <span className="text-xs text-[#475569]">
+              {(selectedFile.size / 1024 / 1024).toFixed(2)} MB
+            </span>
           </div>
         ) : (
           <>
@@ -111,6 +126,15 @@ export function DropZone({ onFileSelect, accept, maxSizeMB, disabled = false }: 
             <p className="text-xs text-[#475569] mt-2">
               Accepted formats: .csv, .xlsx (up to {maxSizeMB}MB)
             </p>
+            {!disabled && (
+              <button
+                type="button"
+                onClick={() => document.querySelector('input[type="file"]')?.dispatchEvent(new MouseEvent('click'))}
+                className="mt-4 px-4 py-2 text-sm text-[#1e3a5f] border border-[#1e3a5f] rounded-lg hover:bg-[#1e3a5f] hover:text-white transition-colors"
+              >
+                Browse Files
+              </button>
+            )}
           </>
         )}
         <input
@@ -120,15 +144,6 @@ export function DropZone({ onFileSelect, accept, maxSizeMB, disabled = false }: 
           className="hidden"
           disabled={disabled}
         />
-        {!disabled && !selectedFileName && (
-          <button
-            type="button"
-            onClick={() => document.querySelector('input[type="file"]')?.dispatchEvent(new MouseEvent('click'))}
-            className="mt-4 px-4 py-2 text-sm text-[#1e3a5f] border border-[#1e3a5f] rounded-lg hover:bg-[#1e3a5f] hover:text-white transition-colors"
-          >
-            Browse Files
-          </button>
-        )}
       </div>
       {error && <p className="text-sm text-red-600">{error}</p>}
     </div>
