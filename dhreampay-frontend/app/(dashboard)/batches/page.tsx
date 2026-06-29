@@ -1,8 +1,9 @@
-import { auth } from '../../../lib/auth/authOptions';
+import { auth } from '@/lib/auth/authOptions';
 import { redirect } from 'next/navigation';
-import { getSettlementBatches } from '../../../lib/api/settlements';
-import { BatchesTable } from '../../../components/batches/BatchesTable';
+import { getSettlementBatches } from '@/lib/api/settlements';
+import { BatchesTable } from '@/components/batches/BatchesTable';
 import Link from 'next/link';
+import type { SettlementBatch } from '@/types/settlementBatch';
 
 export default async function BatchesPage() {
   const session = await auth();
@@ -11,7 +12,7 @@ export default async function BatchesPage() {
     redirect('/login');
   }
 
-  let batches = [];
+  let batches: SettlementBatch[] = [];
   try {
     const response = await getSettlementBatches(session.user.accessToken, { limit: 20 });
     batches = response.data ?? [];
