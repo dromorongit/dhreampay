@@ -26,12 +26,12 @@ export default async function BatchesPage() {
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-slate-900">Settlement Batches</h1>
         {session.user.role !== 'viewer' && (
-          <Link
-            href="/dashboard/batches/upload"
-            className="bg-[#1e3a5f] text-white px-4 py-2 rounded-lg hover:bg-[#2d5a9e] transition-colors"
-          >
-            Upload New File
-          </Link>
+<Link
+             href="/batches/upload"
+             className="bg-[#1e3a5f] text-white px-4 py-2 rounded-lg hover:bg-[#2d5a9e] transition-colors"
+           >
+             Upload New File
+           </Link>
         )}
       </div>
 
@@ -39,7 +39,7 @@ export default async function BatchesPage() {
         <div className="flex flex-col items-center justify-center py-16">
           <Upload size={64} className="text-slate-300 mb-4" />
           <p className="text-slate-600 mb-4">No batches uploaded yet</p>
-          <Link href="/dashboard/batches/upload" className="text-[#1e3a5f] hover:underline">
+          <Link href="/batches/upload" className="text-[#1e3a5f] hover:underline">
             Upload your first file
           </Link>
         </div>
