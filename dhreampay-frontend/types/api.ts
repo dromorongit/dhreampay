@@ -41,3 +41,22 @@ export interface IngestionResult {
   errorCount: number;
   errors: IngestionError[];
 }
+
+export interface Transaction {
+  _id: string;
+  transactionId: string;
+  source: 'bank' | 'visa';
+  transactionType: 'purchase' | 'refund' | 'reversal' | 'adjustment';
+  cardNumberMasked: string;
+  amount: number;
+  currency: string;
+  transactionDate: string;
+  postingDate: string;
+  merchantId: string;
+  terminalId?: string;
+  authorizationCode?: string;
+  isVIP: boolean;
+  settlementBatchId?: string;
+  status: 'unmatched' | 'matched' | 'exception' | 'resolved';
+  createdAt: string;
+}
