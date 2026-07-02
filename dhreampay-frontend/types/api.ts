@@ -60,3 +60,47 @@ export interface Transaction {
   status: 'unmatched' | 'matched' | 'exception' | 'resolved';
   createdAt: string;
 }
+
+export interface MatchingSummary {
+  batchId: string;
+  totalProcessed: number;
+  matched: number;
+  partial: number;
+  exceptions: number;
+  unmatched: number;
+}
+
+export interface BankTransaction {
+  _id: string;
+  transactionId: string;
+  amount: number;
+  transactionDate: string;
+  merchantId: string;
+  authorizationCode?: string;
+}
+
+export interface VisaTransaction {
+  _id: string;
+  transactionId: string;
+  amount: number;
+  transactionDate: string;
+  merchantId: string;
+  authorizationCode?: string;
+}
+
+export type MatchStatus = 'matched' | 'unmatched' | 'partial' | 'exception';
+export type MatchType = 'exact' | 'fuzzy' | 'manual';
+
+export interface ReconciliationRecord {
+  _id: string;
+  recordId: string;
+  bankTransactionId?: BankTransaction | null;
+  visaTransactionId?: VisaTransaction | null;
+  settlementBatchId: string;
+  matchStatus: MatchStatus;
+  matchType?: MatchType;
+  amountDifference?: number;
+  reconciledAt?: string;
+  notes?: string;
+  createdAt: string;
+}
