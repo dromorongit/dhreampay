@@ -10,7 +10,9 @@
     "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
     "seed:admin": "tsx src/scripts/seedAdmin.ts",
     "db:fix-indexes": "tsx src/scripts/dropStaleIndexes.ts",
-    "db:list-indexes": "tsx src/scripts/listAndFixIndexes.ts"
+    "db:list-indexes": "tsx src/scripts/listAndFixIndexes.ts",
+    "db:cleanup-failed": "tsx src/scripts/cleanupFailedBatches.ts",
+    "db:reset-bank": "tsx src/scripts/resetBankData.ts"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
