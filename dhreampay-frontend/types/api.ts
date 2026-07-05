@@ -120,3 +120,28 @@ export interface Exception {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface VIPAccount {
+  _id: string;
+  accountId: string;
+  cardNumberMasked: string;
+  customerName: string;
+  vipTier: 'platinum' | 'gold' | 'silver';
+  accountManager?: string;
+  notes?: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateVIPAccountDTO {
+  accountId: string;
+  cardNumberMasked: string;
+  customerName: string;
+  vipTier: 'platinum' | 'gold' | 'silver';
+  accountManager?: string;
+  notes?: string;
+  isActive?: boolean;
+}
+
+export type UpdateVIPAccountDTO = Partial<Omit<CreateVIPAccountDTO, 'accountId'>>;
