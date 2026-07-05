@@ -104,3 +104,19 @@ export interface ReconciliationRecord {
   notes?: string;
   createdAt: string;
 }
+
+export interface Exception {
+  _id: string;
+  exceptionId: string;
+  reconciliationRecordId: string;
+  transactionId?: string;
+  exceptionType: 'amount_mismatch' | 'missing_bank_record' | 'missing_visa_record' | 'duplicate' | 'date_mismatch' | 'other';
+  severity: 'low' | 'medium' | 'high';
+  status: 'open' | 'investigating' | 'resolved' | 'escalated';
+  description: string;
+  assignedTo?: string;
+  resolvedAt?: string;
+  resolutionNotes?: string;
+  createdAt: string;
+  updatedAt: string;
+}
