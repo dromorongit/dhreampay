@@ -1,6 +1,6 @@
 'use client';
 
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip as RechartsTooltip, ResponsiveContainer } from 'recharts';
 
 interface ExceptionBreakdownChartProps {
   breakdown: Record<string, number>;
@@ -44,9 +44,9 @@ export function ExceptionBreakdownChart({ breakdown }: ExceptionBreakdownChartPr
               tick={{ fontSize: 12 }}
               width={120}
             />
-<Tooltip
+<RechartsTooltip
               contentStyle={{ fontSize: 12 }}
-              formatter={(value: number) => [`${value} records`, 'Count']}
+              formatter={(value) => [`${value as number} records`, 'Count']}
             />
             <Bar dataKey="count" fill="#d4a017" />
           </BarChart>
