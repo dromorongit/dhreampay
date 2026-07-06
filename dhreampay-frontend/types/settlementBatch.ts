@@ -23,3 +23,27 @@ export interface DashboardSummary {
   highSeverityExceptions: number;
   recentBatches: SettlementBatch[];
 }
+
+export interface BatchSummaryReport {
+  batch: {
+    _id: string;
+    batchId: string;
+    batchDate: string;
+    source: string;
+    fileName: string;
+    totalAmount: number;
+    totalCount: number;
+    status: string;
+    uploadedBy: string;
+    createdAt: string;
+  };
+  totalTransactions: number;
+  matched: number;
+  partial: number;
+  unmatched: number;
+  exceptions: number;
+  totalMatchedAmount: number;
+  totalUnmatchedAmount: number;
+  exceptionBreakdown: Record<string, number>;
+  generatedAt: string;
+}
