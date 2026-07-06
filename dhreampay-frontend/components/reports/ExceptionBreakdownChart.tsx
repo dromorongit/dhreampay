@@ -44,9 +44,9 @@ export function ExceptionBreakdownChart({ breakdown }: ExceptionBreakdownChartPr
               tick={{ fontSize: 12 }}
               width={120}
             />
-            <Tooltip
+<Tooltip
               contentStyle={{ fontSize: 12 }}
-              formatter={(value: number) => [`${value} records`, 'Count']}
+              formatter={(value: number | undefined) => [`${value ?? 0} records`, 'Count']}
             />
             <Bar dataKey="count" fill="#d4a017" />
           </BarChart>
