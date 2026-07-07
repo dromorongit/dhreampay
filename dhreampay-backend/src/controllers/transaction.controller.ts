@@ -8,6 +8,7 @@ interface TransactionFilter {
   status?: string
   source?: 'bank' | 'visa'
   isVIP?: boolean
+  settlementBatchId?: string
   transactionDate?: {
     $gte?: Date
     $lte?: Date
@@ -27,6 +28,10 @@ function buildTransactionFilter(query: TransactionListQuery): TransactionFilter 
 
   if (query.isVIP !== undefined) {
     filter.isVIP = query.isVIP
+  }
+
+  if (query.settlementBatchId !== undefined) {
+    filter.settlementBatchId = query.settlementBatchId
   }
 
   if (query.dateFrom !== undefined || query.dateTo !== undefined) {

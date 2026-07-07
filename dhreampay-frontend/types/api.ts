@@ -145,3 +145,22 @@ export interface CreateVIPAccountDTO {
 }
 
 export type UpdateVIPAccountDTO = Partial<Omit<CreateVIPAccountDTO, 'accountId'>>;
+
+export interface User {
+  _id: string;
+  name: string;
+  email: string;
+  role: UserRole;
+  isActive: boolean;
+  lastLoginAt?: string;
+  createdAt: string;
+}
+
+export interface CreateUserDTO {
+  name: string;
+  email: string;
+  password: string;
+  role: UserRole;
+}
+
+export type UpdateUserDTO = Partial<Omit<CreateUserDTO, 'email' | 'password'>>

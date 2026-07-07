@@ -12,6 +12,7 @@ import { exceptionRouter } from './routes/exception.routes.js'
 import { auditLogRouter } from './routes/auditLog.routes.js'
 import { ingestionRouter } from './routes/ingestion.routes.js'
 import { reconciliationRouter } from './routes/reconciliation.routes.js'
+import { userRouter } from './routes/user.routes.js'
 import { reportingRouter } from './routes/reporting.routes.js'
 import { notFound } from './middleware/notFound.js'
 import { errorHandler } from './middleware/errorHandler.js'
@@ -36,6 +37,7 @@ app.use('/api/audit-logs', auditLogRouter)
 app.use('/api/ingestion', ingestionRouter)
 app.use('/api/reconciliation', reconciliationRouter)
 app.use('/api/reporting', reportingRouter)
+app.use('/api/users', userRouter)
 
 app.use(notFound)
 app.use(errorHandler)

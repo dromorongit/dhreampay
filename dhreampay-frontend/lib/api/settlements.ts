@@ -1,5 +1,5 @@
 import { apiRequest } from './client';
-import type { PaginatedResponse } from '../../types/api';
+import type { PaginatedResponse, ApiResponse } from '../../types/api';
 import type { SettlementBatch } from '../../types/settlementBatch';
 
 interface SettlementBatchesParams {
@@ -42,4 +42,15 @@ export async function getSettlementBatches(
       totalPages: pagination?.totalPages ?? 0,
     },
   };
+}
+
+export async function getSettlementBatchById(
+  token: string,
+  batchId: string
+): Promise<ApiResponse<SettlementBatch>> {
+  const response = await apiRequest<SettlementBatch>(`/api/settlement-batches/${batchId}`, {
+    token,
+  });
+
+  return response;
 }

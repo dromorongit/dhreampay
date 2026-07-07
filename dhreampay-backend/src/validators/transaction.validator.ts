@@ -10,7 +10,8 @@ const transactionListQuerySchema = z.object({
   source: sourceEnum.optional(),
   isVIP: z.coerce.boolean().optional(),
   dateFrom: z.string().datetime().optional(),
-  dateTo: z.string().datetime().optional()
+  dateTo: z.string().datetime().optional(),
+  settlementBatchId: z.string().optional()
 })
 
 type TransactionListQuery = z.infer<typeof transactionListQuerySchema>

@@ -9,6 +9,7 @@ interface GetTransactionsParams {
   isVIP?: boolean;
   dateFrom?: string;
   dateTo?: string;
+  settlementBatchId?: string;
 }
 
 export async function getTransactions(
@@ -36,6 +37,9 @@ export async function getTransactions(
   }
   if (params?.dateTo !== undefined) {
     queryParams.append('dateTo', params.dateTo);
+  }
+  if (params?.settlementBatchId !== undefined) {
+    queryParams.append('settlementBatchId', params.settlementBatchId);
   }
 
   const queryString = queryParams.toString();

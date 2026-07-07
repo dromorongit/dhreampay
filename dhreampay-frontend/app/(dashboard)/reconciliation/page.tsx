@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
+import { useSearchParams } from 'next/navigation';
 import { getSettlementBatches } from '@/lib/api/settlements';
 import { getReconciliationRecords } from '@/lib/api/reconciliation';
 import { BatchSelector } from '@/components/reconciliation/BatchSelector';
@@ -15,6 +16,7 @@ export default function ReconciliationPage() {
   const { data: session } = useSession();
   const token = session?.user?.accessToken ?? null;
   const userRole = session?.user?.role ?? 'viewer';
+  const searchParams = useSearchParams();
 
   const [batches, setBatches] = useState<SettlementBatch[]>([]);
   const [selectedBatchId, setSelectedBatchId] = useState<string | null>(null);
@@ -59,6 +61,13 @@ export default function ReconciliationPage() {
 
     void loadBatches();
   }, [token]);
+
+  useEffect(() => {
+    const batchIdParam = searchParams?.get('batchId');
+    if (batchIdParam && !selectedBatchId) {
+      setSelectedBatchId(batchIdParam);
+    }
+  }, [searchParams, selectedBatchId]);
 
   useEffect(() => {
     if (!token || !selectedBatchId) {

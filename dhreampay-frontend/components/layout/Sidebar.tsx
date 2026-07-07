@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, FileText, ArrowLeftRight, GitMerge, AlertTriangle, Star, BarChart2, UserCircle } from 'lucide-react';
+import { LayoutDashboard, FileText, ArrowLeftRight, GitMerge, AlertTriangle, Star, BarChart2, UserCircle, Users } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -21,6 +21,10 @@ const navItems: NavItem[] = [
   { label: 'Reports', href: '/reports', icon: <BarChart2 size={20} /> },
 ];
 
+const adminNavItems: NavItem[] = [
+  { label: 'Users', href: '/users', icon: <Users size={20} /> },
+];
+
 interface SidebarProps {
   userRole?: string;
 }
@@ -36,9 +40,27 @@ export function Sidebar({ userRole }: SidebarProps) {
 
       <nav className="flex-1 px-4 py-6">
         <ul className="space-y-2">
-{navItems.map((item) => {
-             const isActive = pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(item.href));
-             return (
+          {navItems.map((item) => {
+            const isActive = pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(item.href));
+            return (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+                    isActive
+                      ? 'text-[#d4a017] border-l-4 border-[#d4a017] bg-[rgba(212,160,23,0.1)]'
+                      : 'text-white hover:text-white hover:bg-[rgba(255,255,255,0.08)]'
+                  }`}
+                >
+                  <span className={isActive ? 'text-[#d4a017]' : 'text-white'}>{item.icon}</span>
+                  <span>{item.label}</span>
+                </Link>
+              </li>
+            );
+          })}
+          {userRole === 'admin' && adminNavItems.map((item) => {
+            const isActive = pathname === item.href || pathname.startsWith(item.href);
+            return (
               <li key={item.href}>
                 <Link
                   href={item.href}
