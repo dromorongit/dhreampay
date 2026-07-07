@@ -31,7 +31,7 @@ export function Sidebar({ userRole }: SidebarProps) {
   return (
     <aside className="w-64 h-screen bg-[#1e3a5f] fixed left-0 top-0 flex flex-col">
       <div className="flex justify-center p-6 border-b border-[#2d5a9e]">
-        <Image src="/images/dhreampaylogo.jpg" alt="DhreamPay" width={250} height={80} className="w-full max-w-[220px] h-auto" />
+        <Image src="/images/dhreampaylogo.jpg" alt="DhreamPay" width={320} height={100} className="w-full max-w-[240px] h-auto" />
       </div>
 
       <nav className="flex-1 px-4 py-6">
