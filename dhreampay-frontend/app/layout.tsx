@@ -6,6 +6,9 @@ import './globals.css';
 export const metadata: Metadata = {
   title: 'DhreamPay',
   description: 'Visa Card Reconciliation & Settlement System',
+  icons: {
+    icon: '/images/dhreampayfavi.jpg',
+  },
 };
 
 export default function RootLayout({
