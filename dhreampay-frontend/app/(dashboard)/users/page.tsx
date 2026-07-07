@@ -30,7 +30,7 @@ export default function UsersPage() {
 
   useEffect(() => {
     void loadUsers();
-  }, [token]);
+  }, [loadUsers]);
 
   if (userRole !== 'admin') {
     return (
