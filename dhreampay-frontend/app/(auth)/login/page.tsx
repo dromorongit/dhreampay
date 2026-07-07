@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -34,9 +35,7 @@ export default function LoginPage() {
   return (
     <div className="w-full max-w-md">
       <div className="bg-white border border-[#e2e8f0] border-t-4 border-t-[#d4a017] rounded-2xl shadow-lg p-8">
-        <h1 className="text-2xl font-bold text-[#1e3a5f] mb-6 text-center">
-          DhreamPay
-        </h1>
+<Image src="/images/dhreampaylogo.jpg" alt="DhreamPay" width={150} height={48} className="h-12 w-auto mx-auto mb-4" />
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-[#475569] mb-1">

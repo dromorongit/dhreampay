@@ -2,29 +2,9 @@ import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import type { NextAuthConfig } from 'next-auth';
 import type { UserRole } from '../../types/api';
+import './types';
 
 const apiUrl = process.env.API_URL ?? process.env.NEXT_PUBLIC_API_URL ?? '';
-
-declare module 'next-auth' {
-  interface Session {
-    user: {
-      id: string;
-      role: UserRole;
-      accessToken: string;
-      name: string;
-      email: string;
-    };
-  }
-
-  interface JWT {
-    id: string;
-    role: UserRole;
-    accessToken: string;
-    refreshToken: string;
-    name: string;
-    email: string;
-  }
-}
 
 interface CustomUser {
   id: string;
@@ -33,6 +13,52 @@ interface CustomUser {
   role: UserRole;
   accessToken: string;
   refreshToken: string;
+}
+
+type AugmentedJWT = {
+  id?: string | null;
+  role?: UserRole | null;
+  accessToken?: string | null;
+  refreshToken?: string | null;
+  accessTokenExpires?: number | null;
+  name?: string | null;
+  email?: string | null;
+  error?: 'RefreshAccessTokenError';
+};
+
+async function refreshAccessToken(token: AugmentedJWT): Promise<AugmentedJWT> {
+  if (!apiUrl) {
+    return { ...token, error: 'RefreshAccessTokenError' };
+  }
+
+  try {
+    const response = await fetch(`${apiUrl}/api/auth/refresh`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ refreshToken: token.refreshToken }),
+    });
+
+    if (!response.ok) {
+      return { ...token, error: 'RefreshAccessTokenError' };
+    }
+
+    const data = (await response.json()) as {
+      success: boolean;
+      data?: { accessToken: string };
+    };
+
+    if (data.success && data.data) {
+      return {
+        ...token,
+        accessToken: data.data.accessToken,
+        accessTokenExpires: Date.now() + 14 * 60 * 1000,
+      };
+    }
+
+    return { ...token, error: 'RefreshAccessTokenError' };
+  } catch {
+    return { ...token, error: 'RefreshAccessTokenError' };
+  }
 }
 
 export const authOptions: NextAuthConfig = {
@@ -99,10 +125,18 @@ export const authOptions: NextAuthConfig = {
         token.role = customUser.role;
         token.accessToken = customUser.accessToken;
         token.refreshToken = customUser.refreshToken;
+        token.accessTokenExpires = Date.now() + 14 * 60 * 1000;
         token.name = customUser.name;
         token.email = customUser.email;
+        return token;
       }
-      return token;
+
+      const augmentedToken = token as AugmentedJWT;
+      if (Date.now() < (augmentedToken.accessTokenExpires ?? 0)) {
+        return token;
+      }
+
+      return refreshAccessToken(augmentedToken);
     },
     async session({ session, token }) {
       if (token && session.user) {
@@ -112,11 +146,13 @@ export const authOptions: NextAuthConfig = {
         session.user.name = token.name as string;
         session.user.email = token.email as string;
       }
+      session.error = (token as AugmentedJWT).error;
       return session;
     },
   },
   session: {
     strategy: 'jwt',
+    maxAge: 7 * 24 * 60 * 60,
   },
   pages: {
     signIn: '/login',

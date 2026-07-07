@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { SessionProvider } from '../components/providers/SessionProvider';
+import { SessionErrorHandler } from '../lib/auth/SessionErrorHandler';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -15,7 +16,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        <SessionProvider>{children}</SessionProvider>
+        <SessionProvider>
+          <SessionErrorHandler />
+          {children}
+        </SessionProvider>
       </body>
     </html>
   );

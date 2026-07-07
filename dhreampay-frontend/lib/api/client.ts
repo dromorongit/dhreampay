@@ -19,6 +19,9 @@ export async function apiRequest<T>(path: string, options?: RequestInit & { toke
     headers,
   });
 
+  // Note: A 401 response after the JWT refresh logic in NextAuth is in place
+  // indicates the refresh token itself has expired. The SessionErrorHandler
+  // will catch this on the next session check and sign the user out.
   const data = (await response.json()) as ApiResponse<T>;
 
   if (!response.ok || !data.success) {

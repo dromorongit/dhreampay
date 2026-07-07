@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation';
 import { LayoutDashboard, FileText, ArrowLeftRight, GitMerge, AlertTriangle, Star, BarChart2, UserCircle } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface NavItem {
   label: string;
@@ -30,7 +31,7 @@ export function Sidebar({ userRole }: SidebarProps) {
   return (
     <aside className="w-64 h-screen bg-[#1e3a5f] fixed left-0 top-0 flex flex-col">
       <div className="p-6 border-b border-[#2d5a9e]">
-        <h1 className="text-2xl font-bold text-[#d4a017]">DhreamPay</h1>
+        <Image src="/images/dhreampaylogo.jpg" alt="DhreamPay" width={120} height={32} className="h-8 w-auto" />
       </div>
 
       <nav className="flex-1 px-4 py-6">
