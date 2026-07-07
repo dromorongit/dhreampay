@@ -3,6 +3,7 @@ import { MongoMemoryServer } from 'mongodb-memory-server'
 import request from 'supertest'
 import { app } from '../src/app.js'
 import * as userRepo from '../src/repositories/user.repository.js'
+import { signAccessToken } from '../src/utils/jwt.js'
 
 let mongoServer: MongoMemoryServer | null = null
 
@@ -38,7 +39,6 @@ async function getAuthToken(role: 'admin' | 'reconciler' | 'viewer'): Promise<st
     role
   })
 
-  const { signAccessToken } = await import('../src/utils/jwt.js')
   const token = signAccessToken({
     userId: user._id,
     role
