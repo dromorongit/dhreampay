@@ -31,9 +31,8 @@ reportingRouter.get(
 )
 
 reportingRouter.get(
-  '/batch/:batchId/export',
+  '/batch/export',
   authMiddleware,
-  validate(exportParamsSchema, 'params'),
   validate(exportQuerySchema, 'query'),
   authorize('admin', 'reconciler'),
   exportBatchReport

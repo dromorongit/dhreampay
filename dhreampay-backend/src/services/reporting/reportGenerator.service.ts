@@ -2,9 +2,11 @@ import { Types } from 'mongoose'
 import * as settlementBatchRepository from '../../repositories/settlementBatch.repository.js'
 import * as reconciliationRecordRepository from '../../repositories/reconciliationRecord.repository.js'
 import * as exceptionRepository from '../../repositories/exception.repository.js'
+import * as transactionRepository from '../../repositories/transaction.repository.js'
 import { ISettlementBatch } from '../../types/settlementBatch.types.js'
 import { ExceptionType } from '../../types/exception.types.js'
 import { IException } from '../../types/exception.types.js'
+import { ITransaction } from '../../types/transaction.types.js'
 
 interface BatchSummaryReport {
   batch: {
@@ -56,6 +58,27 @@ async function generateBatchSummary(batchId: string): Promise<BatchSummaryReport
     {}
   )
 
+  const transactionIds = new Set<Types.ObjectId>()
+  for (const record of records.data) {
+    if (record.bankTransactionId instanceof Types.ObjectId) {
+      transactionIds.add(record.bankTransactionId)
+    }
+    if (record.visaTransactionId instanceof Types.ObjectId) {
+      transactionIds.add(record.visaTransactionId)
+    }
+  }
+
+  const transactionsMap = new Map<string, ITransaction>()
+  if (transactionIds.size > 0) {
+    const transactions = await transactionRepository.find(
+      { _id: { $in: Array.from(transactionIds) } } as unknown as Partial<ITransaction>,
+      {}
+    )
+    for (const tx of transactions.data) {
+      transactionsMap.set(tx._id.toString(), tx)
+    }
+  }
+
   let matched = 0
   let partial = 0
   let unmatched = 0
@@ -73,16 +96,23 @@ async function generateBatchSummary(batchId: string): Promise<BatchSummaryReport
   }
 
   for (const record of records.data) {
+    const bankTx = record.bankTransactionId instanceof Types.ObjectId
+      ? transactionsMap.get(record.bankTransactionId.toString())
+      : null
+    const visaTx = record.visaTransactionId instanceof Types.ObjectId
+      ? transactionsMap.get(record.visaTransactionId.toString())
+      : null
+
+    const matchedAmount = bankTx?.amount ?? visaTx?.amount ?? 0
+
     if (record.matchStatus === 'matched') {
       matched = matched + 1
-      if (record.amountDifference !== undefined) {
-        totalMatchedAmount = totalMatchedAmount + record.amountDifference
-      }
+      totalMatchedAmount = totalMatchedAmount + matchedAmount
     } else if (record.matchStatus === 'partial') {
       partial = partial + 1
     } else if (record.matchStatus === 'unmatched') {
       unmatched = unmatched + 1
-      totalUnmatchedAmount = totalUnmatchedAmount + (record.amountDifference ?? 0)
+      totalUnmatchedAmount = totalUnmatchedAmount + matchedAmount
     } else if (record.matchStatus === 'exception') {
       exceptionsCount = exceptionsCount + 1
     }

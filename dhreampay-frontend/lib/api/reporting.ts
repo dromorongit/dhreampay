@@ -40,12 +40,17 @@ export async function exportBatchReport(
   }
 ): Promise<{ blob: Blob; filename: string }> {
   const queryParams = new URLSearchParams();
+  queryParams.append('batchId', params.batchId);
   queryParams.append('format', params.format);
   if (params.includeExceptions !== undefined) {
     queryParams.append('includeExceptions', String(params.includeExceptions));
+  } else {
+    queryParams.append('includeExceptions', 'true');
   }
   if (params.includeUnmatched !== undefined) {
     queryParams.append('includeUnmatched', String(params.includeUnmatched));
+  } else {
+    queryParams.append('includeUnmatched', 'true');
   }
 
   const response = await fetch(`${API_BASE_URL}/api/reporting/batch/export?${queryParams.toString()}`, {

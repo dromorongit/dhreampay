@@ -26,8 +26,8 @@ async function getBatchSummary(req: Request, res: Response): Promise<Response> {
 }
 
 async function exportBatchReport(req: Request, res: Response): Promise<Response> {
-  const { batchId } = req.params as { batchId: string }
   const query = req.query as {
+    batchId: string
     format?: 'xlsx' | 'csv'
     includeExceptions?: string
     includeUnmatched?: string
@@ -41,6 +41,7 @@ async function exportBatchReport(req: Request, res: Response): Promise<Response>
     ? query.includeUnmatched === 'true' 
     : true
 
+  const batchId = query.batchId;
   try {
     const { buffer, filename, contentType } = await generateBatchExport({
       batchId,
@@ -52,7 +53,7 @@ async function exportBatchReport(req: Request, res: Response): Promise<Response>
     await auditLogRepository.create({
       action: 'report.exported',
       entityType: 'SettlementBatch',
-      entityId: batchId,
+      entityId: query.batchId,
       performedBy: req.user?.userId ?? 'unknown'
     })
 
