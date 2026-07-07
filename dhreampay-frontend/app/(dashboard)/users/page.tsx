@@ -1,7 +1,7 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { getUsers } from '@/lib/api/users';
 import { UsersTable } from '@/components/users/UsersTable';
 import { UserModal } from '@/components/users/UserModal';
@@ -10,6 +10,27 @@ import type { User } from '@/types/api';
 export default function UsersPage() {
   const { data: session } = useSession();
   const userRole = session?.user?.role ?? 'viewer';
+  const token = session?.user?.accessToken ?? '';
+  const [users, setUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [modalMode, setModalMode] = useState<'create' | null>(null);
+
+  const loadUsers = useCallback(async () => {
+    if (!token) return;
+    setLoading(true);
+    try {
+      const response = await getUsers(token, { limit: 50 });
+      setUsers(response.data ?? []);
+    } catch {
+      setUsers([]);
+    } finally {
+      setLoading(false);
+    }
+  }, [token]);
+
+  useEffect(() => {
+    void loadUsers();
+  }, [token]);
 
   if (userRole !== 'admin') {
     return (
@@ -23,28 +44,6 @@ export default function UsersPage() {
       </div>
     );
   }
-
-  const token = session?.user?.accessToken ?? '';
-  const [users, setUsers] = useState<User[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [modalMode, setModalMode] = useState<'create' | null>(null);
-
-  const loadUsers = async () => {
-    if (!token) return;
-    setLoading(true);
-    try {
-      const response = await getUsers(token, { limit: 50 });
-      setUsers(response.data ?? []);
-    } catch {
-      setUsers([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    void loadUsers();
-  }, [token]);
 
   return (
     <div className="space-y-6">

@@ -2,7 +2,7 @@
 
 import { FC, useState, useEffect, FormEvent } from 'react';
 import { createUser, updateUser } from '@/lib/api/users';
-import type { User, CreateUserDTO, UpdateUserDTO } from '../../types/api';
+import type { User } from '../../types/api';
 
 interface UserModalProps {
   mode: 'create' | 'edit' | null;
