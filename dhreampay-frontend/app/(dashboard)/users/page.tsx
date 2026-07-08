@@ -15,21 +15,24 @@ export default function UsersPage() {
   const [loading, setLoading] = useState(true);
   const [modalMode, setModalMode] = useState<'create' | null>(null);
 
-  const loadUsers = useCallback(async () => {
-    if (!token) return;
-    setLoading(true);
-    try {
-      const response = await getUsers(token, { limit: 50 });
-      setUsers(response.data ?? []);
-    } catch {
-      setUsers([]);
-    } finally {
-      setLoading(false);
-    }
+  const loadUsers = useCallback(() => {
+    const fetchUsers = async () => {
+      if (!token) return;
+      setLoading(true);
+      try {
+        const response = await getUsers(token, { limit: 50 });
+        setUsers(response.data ?? []);
+      } catch {
+        setUsers([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    void fetchUsers();
   }, [token]);
 
   useEffect(() => {
-    void loadUsers();
+    loadUsers();
   }, [loadUsers]);
 
   if (userRole !== 'admin') {
