@@ -21,7 +21,7 @@ export function DashboardShell({ userRole, userName, userEmail, children }: Dash
         isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}
       />
-      <div className="ml-64 flex flex-col flex-1 lg:ml-0">
+      <div className="lg:ml-64 flex flex-col flex-1">
         <Header
           pageTitle="DhreamPay"
           userName={userName}
