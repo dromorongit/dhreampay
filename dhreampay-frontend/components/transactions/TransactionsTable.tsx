@@ -52,8 +52,8 @@ export const TransactionsTable: FC<TransactionsTableProps> = ({ transactions }) 
 
   return (
     <div className="bg-white rounded-xl border border-[#e2e8f0] overflow-hidden">
-      <div className="overflow-x-auto">
-        <table className="w-full">
+<div className="overflow-x-auto">
+         <table className="w-full min-w-[768px]">
           <thead>
             <tr className="bg-[#1e3a5f]">
               <th className="text-left text-xs font-medium text-white pb-3 px-4">Transaction ID</th>

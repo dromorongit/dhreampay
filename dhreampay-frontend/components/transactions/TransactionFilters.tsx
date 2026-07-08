@@ -80,17 +80,17 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({ initialValues 
 
   return (
     <div className="bg-white rounded-xl p-4 border border-[#e2e8f0] shadow-sm mb-4">
-      <div className="flex flex-wrap items-center gap-4">
+      <div className="flex flex-col sm:flex-row flex-wrap gap-3">
         <div className="flex items-center gap-2">
           <label className="text-sm font-medium text-slate-700" htmlFor="source-filter">
             Source
           </label>
-          <select
-            id="source-filter"
-            value={source}
-            onChange={(e) => handleSourceChange(e.target.value)}
-            className="px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white"
-          >
+<select
+             id="source-filter"
+             value={source}
+             onChange={(e) => handleSourceChange(e.target.value)}
+             className="px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white"
+           >
             <option value="all">All</option>
             <option value="bank">Bank</option>
             <option value="visa">Visa</option>
@@ -101,12 +101,12 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({ initialValues 
           <label className="text-sm font-medium text-slate-700" htmlFor="status-filter">
             Status
           </label>
-          <select
-            id="status-filter"
-            value={status}
-            onChange={(e) => handleStatusChange(e.target.value)}
-            className="px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white"
-          >
+<select
+             id="status-filter"
+             value={status}
+             onChange={(e) => handleStatusChange(e.target.value)}
+             className="px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white"
+           >
             <option value="all">All</option>
             <option value="unmatched">Unmatched</option>
             <option value="matched">Matched</option>
@@ -132,26 +132,26 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({ initialValues 
           <label className="text-sm font-medium text-slate-700" htmlFor="date-from">
             Date From
           </label>
-          <input
-            type="date"
-            id="date-from"
-            value={dateFrom}
-            onChange={(e) => handleDateFromChange(e.target.value)}
-            className="px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white"
-          />
+<input
+             type="date"
+             id="date-from"
+             value={dateFrom}
+             onChange={(e) => handleDateFromChange(e.target.value)}
+             className="px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white"
+           />
         </div>
 
         <div className="flex items-center gap-2">
           <label className="text-sm font-medium text-slate-700" htmlFor="date-to">
             Date To
           </label>
-          <input
-            type="date"
-            id="date-to"
-            value={dateTo}
-            onChange={(e) => handleDateToChange(e.target.value)}
-            className="px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white"
-          />
+<input
+             type="date"
+             id="date-to"
+             value={dateTo}
+             onChange={(e) => handleDateToChange(e.target.value)}
+             className="px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white"
+           />
         </div>
 
         <button

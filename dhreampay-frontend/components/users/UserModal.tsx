@@ -147,8 +147,8 @@ export const UserModal: FC<UserModalProps> = ({
   return (
     <>
       <div className="fixed inset-0 bg-black/50 z-50" onClick={onClose} />
-      <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
-        <div className="bg-white rounded-2xl shadow-2xl max-w-[560px] w-full max-h-[90vh] overflow-y-auto">
+<div className="fixed inset-0 flex items-center justify-center z-50 p-4">
+         <div className="bg-white rounded-2xl shadow-2xl w-full max-w-[560px] mx-4 max-h-[90vh] overflow-y-auto">
           <div className="p-8">
             <h2 className="text-xl font-bold text-slate-900 mb-6">{getTitle()}</h2>
 
@@ -157,15 +157,15 @@ export const UserModal: FC<UserModalProps> = ({
                 <label className="block text-sm font-medium text-slate-700 mb-1" htmlFor="name">
                   Name
                 </label>
-                <input
-                  id="name"
-                  type="text"
-                  value={formData.name}
-                  onChange={(e) => handleChange('name', e.target.value)}
-                  disabled={loading}
-                  placeholder="Enter full name"
-                  className="w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white"
-                />
+<input
+                   id="name"
+                   type="text"
+                   value={formData.name}
+                   onChange={(e) => handleChange('name', e.target.value)}
+                   disabled={loading}
+                   placeholder="Enter full name"
+                   className="w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white"
+                 />
                 {errors.name && <span className="text-xs text-red-600 mt-1">{errors.name}</span>}
               </div>
 
@@ -173,17 +173,17 @@ export const UserModal: FC<UserModalProps> = ({
                 <label className="block text-sm font-medium text-slate-700 mb-1" htmlFor="email">
                   Email
                 </label>
-                <input
-                  id="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => handleChange('email', e.target.value)}
-                  disabled={loading || isEditMode}
-                  placeholder="Enter email address"
-                  className={`w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white ${
-                    isEditMode ? 'opacity-50 cursor-not-allowed' : ''
-                  }`}
-                />
+<input
+                   id="email"
+                   type="email"
+                   value={formData.email}
+                   onChange={(e) => handleChange('email', e.target.value)}
+                   disabled={loading || isEditMode}
+                   placeholder="Enter email address"
+                   className={`w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white ${
+                     isEditMode ? 'opacity-50 cursor-not-allowed' : ''
+                   }`}
+                 />
                 {isEditMode && (
                   <p className="text-xs text-slate-500 mt-1">Email cannot be changed</p>
                 )}
@@ -195,15 +195,15 @@ export const UserModal: FC<UserModalProps> = ({
                   <label className="block text-sm font-medium text-slate-700 mb-1" htmlFor="password">
                     Password
                   </label>
-                  <input
-                    id="password"
-                    type="password"
-                    value={formData.password}
-                    onChange={(e) => handleChange('password', e.target.value)}
-                    disabled={loading}
-                    placeholder="Enter password (min 8 characters)"
-                    className="w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white"
-                  />
+<input
+                   id="password"
+                   type="password"
+                   value={formData.password}
+                   onChange={(e) => handleChange('password', e.target.value)}
+                   disabled={loading}
+                   placeholder="Enter password (min 8 characters)"
+                   className="w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white"
+                 />
                   {errors.password && (
                     <span className="text-xs text-red-600 mt-1">{errors.password}</span>
                   )}
@@ -214,15 +214,15 @@ export const UserModal: FC<UserModalProps> = ({
                 <label className="block text-sm font-medium text-slate-700 mb-1" htmlFor="role">
                   Role
                 </label>
-                <select
-                  id="role"
-                  value={formData.role}
-                  onChange={(e) =>
-                    handleChange('role', e.target.value as 'admin' | 'reconciler' | 'viewer')
-                  }
-                  disabled={loading}
-                  className="w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white"
-                >
+<select
+                   id="role"
+                   value={formData.role}
+                   onChange={(e) =>
+                     handleChange('role', e.target.value as 'admin' | 'reconciler' | 'viewer')
+                   }
+                   disabled={loading}
+                   className="w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white"
+                 >
                   {roleOptions.map((role) => (
                     <option key={role} value={role}>
                       {role.charAt(0).toUpperCase() + role.slice(1)}

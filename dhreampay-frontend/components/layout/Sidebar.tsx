@@ -27,55 +27,71 @@ const adminNavItems: NavItem[] = [
 
 interface SidebarProps {
   userRole?: string;
+  isOpen?: boolean;
+  onClose?: () => void;
 }
 
-export function Sidebar({ userRole }: SidebarProps) {
+export function Sidebar({ userRole, isOpen = true, onClose }: SidebarProps) {
   const pathname = usePathname();
 
   return (
-    <aside className="w-64 h-screen bg-[#1e3a5f] fixed left-0 top-0 flex flex-col">
+    <>
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-30 lg:hidden"
+          onClick={onClose}
+        />
+      )}
+      <aside className={`
+        w-64 h-screen bg-[#1e3a5f] fixed inset-y-0 left-0 flex flex-col
+        transform transition-transform duration-200 z-40
+        lg:static lg:translate-x-0
+        ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+      `}>
       <div className="flex justify-center p-6 border-b border-[#2d5a9e]">
         <Image src="/images/dhreampaylogo.jpg" alt="DhreamPay" width={320} height={100} className="w-full max-w-[240px] h-auto" />
       </div>
 
       <nav className="flex-1 px-4 py-6">
         <ul className="space-y-2">
-          {navItems.map((item) => {
-            const isActive = pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(item.href));
-            return (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                    isActive
-                      ? 'text-[#d4a017] border-l-4 border-[#d4a017] bg-[rgba(212,160,23,0.1)]'
-                      : 'text-white hover:text-white hover:bg-[rgba(255,255,255,0.08)]'
-                  }`}
-                >
-                  <span className={isActive ? 'text-[#d4a017]' : 'text-white'}>{item.icon}</span>
-                  <span>{item.label}</span>
-                </Link>
-              </li>
-            );
-          })}
-          {userRole === 'admin' && adminNavItems.map((item) => {
-            const isActive = pathname === item.href || pathname.startsWith(item.href);
-            return (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                    isActive
-                      ? 'text-[#d4a017] border-l-4 border-[#d4a017] bg-[rgba(212,160,23,0.1)]'
-                      : 'text-white hover:text-white hover:bg-[rgba(255,255,255,0.08)]'
-                  }`}
-                >
-                  <span className={isActive ? 'text-[#d4a017]' : 'text-white'}>{item.icon}</span>
-                  <span>{item.label}</span>
-                </Link>
-              </li>
-            );
-          })}
+{navItems.map((item) => {
+             const isActive = pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(item.href));
+             return (
+               <li key={item.href}>
+                 <Link
+                   href={item.href}
+                   onClick={onClose}
+                   className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+                     isActive
+                       ? 'text-[#d4a017] border-l-4 border-[#d4a017] bg-[rgba(212,160,23,0.1)]'
+                       : 'text-white hover:text-white hover:bg-[rgba(255,255,255,0.08)]'
+                   }`}
+                 >
+                   <span className={isActive ? 'text-[#d4a017]' : 'text-white'}>{item.icon}</span>
+                   <span>{item.label}</span>
+                 </Link>
+               </li>
+             );
+           })}
+{userRole === 'admin' && adminNavItems.map((item) => {
+             const isActive = pathname === item.href || pathname.startsWith(item.href);
+             return (
+               <li key={item.href}>
+                 <Link
+                   href={item.href}
+                   onClick={onClose}
+                   className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+                     isActive
+                       ? 'text-[#d4a017] border-l-4 border-[#d4a017] bg-[rgba(212,160,23,0.1)]'
+                       : 'text-white hover:text-white hover:bg-[rgba(255,255,255,0.08)]'
+                   }`}
+                 >
+                   <span className={isActive ? 'text-[#d4a017]' : 'text-white'}>{item.icon}</span>
+                   <span>{item.label}</span>
+                 </Link>
+               </li>
+             );
+           })}
         </ul>
       </nav>
 
@@ -88,5 +104,6 @@ export function Sidebar({ userRole }: SidebarProps) {
         </div>
       </div>
     </aside>
+    </>
   );
 }

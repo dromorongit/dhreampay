@@ -123,15 +123,15 @@ export const VIPAccountForm: FC<VIPAccountFormProps> = ({
         <label className="block text-sm font-medium text-slate-700 mb-1" htmlFor="account-id">
           Account ID
         </label>
-        <input
-          id="account-id"
-          type="text"
-          value={formData.accountId}
-          onChange={(e) => handleChange('accountId', e.target.value)}
-          disabled={isEditMode || loading}
-          placeholder="Enter account ID"
-          className="w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white disabled:opacity-50 disabled:cursor-not-allowed"
-        />
+<input
+           id="account-id"
+           type="text"
+           value={formData.accountId}
+           onChange={(e) => handleChange('accountId', e.target.value)}
+           disabled={isEditMode || loading}
+           placeholder="Enter account ID"
+           className="w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white disabled:opacity-50 disabled:cursor-not-allowed"
+         />
         {errors.accountId && <span className="text-xs text-red-600 mt-1">{errors.accountId}</span>}
       </div>
 
@@ -139,15 +139,15 @@ export const VIPAccountForm: FC<VIPAccountFormProps> = ({
         <label className="block text-sm font-medium text-slate-700 mb-1" htmlFor="card-number">
           Card Number (Masked)
         </label>
-        <input
-          id="card-number"
-          type="text"
-          value={formData.cardNumberMasked}
-          onChange={(e) => handleChange('cardNumberMasked', e.target.value)}
-          disabled={loading}
-          placeholder="4532XXXXXXXX1234"
-          className="w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white"
-        />
+<input
+           id="card-number"
+           type="text"
+           value={formData.cardNumberMasked}
+           onChange={(e) => handleChange('cardNumberMasked', e.target.value)}
+           disabled={loading}
+           placeholder="4532XXXXXXXX1234"
+           className="w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white"
+         />
         {errors.cardNumberMasked && (
           <span className="text-xs text-red-600 mt-1">{errors.cardNumberMasked}</span>
         )}
@@ -157,15 +157,15 @@ export const VIPAccountForm: FC<VIPAccountFormProps> = ({
         <label className="block text-sm font-medium text-slate-700 mb-1" htmlFor="customer-name">
           Customer Name
         </label>
-        <input
-          id="customer-name"
-          type="text"
-          value={formData.customerName}
-          onChange={(e) => handleChange('customerName', e.target.value)}
-          disabled={loading}
-          placeholder="Enter customer name"
-          className="w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white"
-        />
+<input
+           id="customer-name"
+           type="text"
+           value={formData.customerName}
+           onChange={(e) => handleChange('customerName', e.target.value)}
+           disabled={loading}
+           placeholder="Enter customer name"
+           className="w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white"
+         />
         {errors.customerName && (
           <span className="text-xs text-red-600 mt-1">{errors.customerName}</span>
         )}
@@ -175,15 +175,15 @@ export const VIPAccountForm: FC<VIPAccountFormProps> = ({
         <label className="block text-sm font-medium text-slate-700 mb-1" htmlFor="vip-tier">
           VIP Tier
         </label>
-        <select
-          id="vip-tier"
-          value={formData.vipTier}
-          onChange={(e) =>
-            handleChange('vipTier', e.target.value as 'platinum' | 'gold' | 'silver')
-          }
-          disabled={loading}
-          className="w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white"
-        >
+<select
+           id="vip-tier"
+           value={formData.vipTier}
+           onChange={(e) =>
+             handleChange('vipTier', e.target.value as 'platinum' | 'gold' | 'silver')
+           }
+           disabled={loading}
+           className="w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white"
+         >
           <option value="platinum">Platinum</option>
           <option value="gold">Gold</option>
           <option value="silver">Silver</option>
@@ -195,30 +195,30 @@ export const VIPAccountForm: FC<VIPAccountFormProps> = ({
         <label className="block text-sm font-medium text-slate-700 mb-1" htmlFor="account-manager">
           Account Manager (Optional)
         </label>
-        <input
-          id="account-manager"
-          type="text"
-          value={formData.accountManager}
-          onChange={(e) => handleChange('accountManager', e.target.value)}
-          disabled={loading}
-          placeholder="Enter account manager name"
-          className="w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white"
-        />
+<input
+           id="account-manager"
+           type="text"
+           value={formData.accountManager}
+           onChange={(e) => handleChange('accountManager', e.target.value)}
+           disabled={loading}
+           placeholder="Enter account manager name"
+           className="w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white"
+         />
       </div>
 
       <div>
         <label className="block text-sm font-medium text-slate-700 mb-1" htmlFor="notes">
           Notes (Optional)
         </label>
-        <textarea
-          id="notes"
-          value={formData.notes}
-          onChange={(e) => handleChange('notes', e.target.value)}
-          disabled={loading}
-          placeholder="Add notes..."
-          rows={3}
-          className="w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white resize-none"
-        />
+<textarea
+           id="notes"
+           value={formData.notes}
+           onChange={(e) => handleChange('notes', e.target.value)}
+           disabled={loading}
+           placeholder="Add notes..."
+           rows={3}
+           className="w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white resize-none"
+         />
       </div>
 
       <div className="flex items-center gap-2">

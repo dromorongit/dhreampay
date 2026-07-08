@@ -69,17 +69,17 @@ export const ExceptionFilters: FC<ExceptionFiltersProps> = ({ initialValues }) =
 
   return (
     <div className="bg-white rounded-xl p-4 border border-[#e2e8f0] shadow-sm mb-4">
-      <div className="flex flex-wrap items-center gap-4">
+      <div className="flex flex-col sm:flex-row flex-wrap gap-3">
         <div className="flex items-center gap-2">
           <label className="text-sm font-medium text-slate-700" htmlFor="status-filter">
             Status
           </label>
-          <select
-            id="status-filter"
-            value={status}
-            onChange={(e) => handleStatusChange(e.target.value)}
-            className="px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white"
-          >
+<select
+             id="status-filter"
+             value={status}
+             onChange={(e) => handleStatusChange(e.target.value)}
+             className="px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white"
+           >
             <option value="all">All</option>
             <option value="open">Open</option>
             <option value="investigating">Investigating</option>
@@ -92,12 +92,12 @@ export const ExceptionFilters: FC<ExceptionFiltersProps> = ({ initialValues }) =
           <label className="text-sm font-medium text-slate-700" htmlFor="severity-filter">
             Severity
           </label>
-          <select
-            id="severity-filter"
-            value={severity}
-            onChange={(e) => handleSeverityChange(e.target.value)}
-            className="px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white"
-          >
+<select
+             id="severity-filter"
+             value={severity}
+             onChange={(e) => handleSeverityChange(e.target.value)}
+             className="px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white"
+           >
             {severityOptions.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}
@@ -110,12 +110,12 @@ export const ExceptionFilters: FC<ExceptionFiltersProps> = ({ initialValues }) =
           <label className="text-sm font-medium text-slate-700" htmlFor="type-filter">
             Type
           </label>
-          <select
-            id="type-filter"
-            value={exceptionType}
-            onChange={(e) => handleTypeChange(e.target.value)}
-            className="px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white"
-          >
+<select
+             id="type-filter"
+             value={exceptionType}
+             onChange={(e) => handleTypeChange(e.target.value)}
+             className="px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white"
+           >
             <option value="all">All</option>
             <option value="amount_mismatch">Amount Mismatch</option>
             <option value="missing_bank_record">Missing Bank Record</option>

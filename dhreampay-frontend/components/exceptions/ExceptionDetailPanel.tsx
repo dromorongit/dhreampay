@@ -96,7 +96,7 @@ export const ExceptionDetailPanel: FC<ExceptionDetailPanelProps> = ({
   return (
     <>
       <div className="fixed inset-0 bg-black bg-opacity-30 z-40" onClick={onClose} />
-      <div className="fixed right-0 top-0 h-screen w-[480px] bg-white shadow-2xl z-50 overflow-y-auto">
+      <div className="fixed right-0 top-0 h-screen w-full sm:w-[480px] bg-white shadow-2xl z-50 overflow-y-auto">
         <div className="p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-bold text-slate-900">Exception Details</h2>
@@ -137,15 +137,15 @@ export const ExceptionDetailPanel: FC<ExceptionDetailPanelProps> = ({
             <div>
               <label className="text-xs font-medium text-slate-500 uppercase">Assigned To</label>
               {canEdit ? (
-                <input
-                  type="text"
-                  value={assignedTo}
-                  onChange={(e) => setAssignedTo(e.target.value)}
-                  onBlur={handleAssignedToBlur}
-                  disabled={loading}
-                  placeholder="Enter assignee name"
-                  className="mt-1 w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white disabled:opacity-50"
-                />
+<input
+                   type="text"
+                   value={assignedTo}
+                   onChange={(e) => setAssignedTo(e.target.value)}
+                   onBlur={handleAssignedToBlur}
+                   disabled={loading}
+                   placeholder="Enter assignee name"
+                   className="mt-1 w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white disabled:opacity-50"
+                 />
               ) : (
                 <p className="text-sm text-slate-900 mt-1">{exception.assignedTo ?? 'Unassigned'}</p>
               )}
@@ -157,13 +157,13 @@ export const ExceptionDetailPanel: FC<ExceptionDetailPanelProps> = ({
                 <label className="text-xs font-medium text-slate-500 uppercase">Resolution Notes</label>
                 {canEdit ? (
                   <>
-                    <textarea
-                      value={resolutionNotes}
-                      onChange={(e) => setResolutionNotes(e.target.value)}
-                      placeholder="Add resolution notes..."
-                      rows={4}
-                      className="mt-1 w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white resize-none"
-                    />
+<textarea
+                       value={resolutionNotes}
+                       onChange={(e) => setResolutionNotes(e.target.value)}
+                       placeholder="Add resolution notes..."
+                       rows={4}
+                       className="mt-1 w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white resize-none"
+                     />
                     <button
                       onClick={handleSaveNotes}
                       disabled={savingNotes}
