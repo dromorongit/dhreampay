@@ -44,9 +44,9 @@ export function BatchesTable({ batches, userRole }: BatchesTableProps) {
   }
 
   return (
-    <div className="bg-[#f8fafc] rounded-xl border border-[#e2e8f0] overflow-hidden">
-<div className="overflow-x-auto">
-         <table className="w-full min-w-[768px]">
+<div className="bg-[#f8fafc] rounded-xl border border-[#e2e8f0] overflow-hidden w-full max-w-full">
+<div className="overflow-x-auto w-full max-w-full">
+          <table className="w-full min-w-[768px]">
           <thead>
             <tr className="bg-[#1e3a5f]">
               <th className="text-left text-xs font-medium text-white pb-3 px-4">

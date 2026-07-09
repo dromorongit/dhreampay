@@ -30,8 +30,8 @@ export default async function DashboardPage() {
   const matchRateAccent = summary.overallMatchRate >= 90 ? '#d4a017' : summary.overallMatchRate < 80 ? '#dc2626' : '#d4a017';
 
   return (
-    <div className="space-y-6 bg-white min-h-screen">
-      <h1 className="text-2xl font-bold text-[#0f172a]">Dashboard</h1>
+    <div className="space-y-6 bg-white min-h-screen w-full max-w-full">
+      <h1 className="text-xl sm:text-2xl font-bold text-[#0f172a]">Dashboard</h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatsCard
