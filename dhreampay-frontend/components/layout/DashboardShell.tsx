@@ -28,7 +28,7 @@ export function DashboardShell({ userRole, userName, userEmail, children }: Dash
           userEmail={userEmail}
           onMenuClick={() => setIsSidebarOpen(true)}
         />
-        <main className="flex-1 p-4 sm:p-6 overflow-y-auto overflow-x-hidden bg-white w-full max-w-full">{children}</main>
+        <main className="flex-1 p-4 sm:p-6 bg-white w-full max-w-full">{children}</main>
       </div>
     </div>
   );

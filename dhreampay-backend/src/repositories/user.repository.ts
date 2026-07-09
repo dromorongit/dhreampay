@@ -22,6 +22,11 @@ async function findByEmail(email: string): Promise<IUser | null> {
   return UserModel.findOne({ email }).select('+password').exec()
 }
 
+async function hasAnyAdmin(): Promise<boolean> {
+  const count = await UserModel.countDocuments({ role: 'admin' }).exec()
+  return count > 0
+}
+
 async function find(
   filter: Partial<IUser>,
   options: { page?: number; limit?: number }
@@ -51,5 +56,6 @@ export {
   findByEmail,
   find,
   updateById,
-  deleteById
+  deleteById,
+  hasAnyAdmin
 }

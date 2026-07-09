@@ -169,3 +169,69 @@ describe('Auth', () => {
     expect(refreshResponse.body.data.accessToken).toBeDefined()
   })
 })
+
+describe('Bootstrap Registration', () => {
+  it('GET /api/auth/bootstrap-status returns adminExists: false on fresh database', async () => {
+    const response = await request(app)
+      .get('/api/auth/bootstrap-status')
+
+    expect(response.status).toBe(200)
+    expect(response.body.success).toBe(true)
+    expect(response.body.data.adminExists).toBe(false)
+  })
+
+  it('POST /api/auth/bootstrap-register succeeds and returns 201 with accessToken when no admin exists', async () => {
+    const response = await request(app)
+      .post('/api/auth/bootstrap-register')
+      .send({
+        name: 'Admin User',
+        email: 'admin@example.com',
+        password: 'password123'
+      })
+
+    expect(response.status).toBe(201)
+    expect(response.body.success).toBe(true)
+    expect(response.body.data.accessToken).toBeDefined()
+    expect(response.body.data.refreshToken).toBeDefined()
+    expect(response.body.data.user.email).toBe('admin@example.com')
+    expect(response.body.data.user.password).toBeUndefined()
+    expect(response.body.data.user.role).toBe('admin')
+  })
+
+  it('POST /api/auth/bootstrap-register returns 403 after an admin exists', async () => {
+    const response = await request(app)
+      .post('/api/auth/bootstrap-register')
+      .send({
+        name: 'Second Admin',
+        email: 'second@example.com',
+        password: 'password123'
+      })
+
+    expect(response.status).toBe(403)
+    expect(response.body.success).toBe(false)
+    expect(response.body.message).toBe('An admin account already exists. Registration is disabled. Contact your administrator for access.')
+  })
+
+  it('GET /api/auth/bootstrap-status returns adminExists: true after first registration', async () => {
+    const response = await request(app)
+      .get('/api/auth/bootstrap-status')
+
+    expect(response.status).toBe(200)
+    expect(response.body.success).toBe(true)
+    expect(response.body.data.adminExists).toBe(true)
+  })
+
+  it('bootstrap-register ignores role field and creates admin regardless', async () => {
+    const response = await request(app)
+      .post('/api/auth/bootstrap-register')
+      .send({
+        name: 'Role Hacker',
+        email: 'hacker@example.com',
+        password: 'password123',
+        role: 'viewer'
+      })
+
+    expect(response.status).toBe(403)
+    expect(response.body.message).toBe('An admin account already exists. Registration is disabled. Contact your administrator for access.')
+  })
+})

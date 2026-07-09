@@ -1,5 +1,5 @@
 import { Types } from 'mongoose'
-import { findByEmail, findById, updateById } from '../repositories/user.repository.js'
+import { findByEmail, findById, updateById, create, hasAnyAdmin } from '../repositories/user.repository.js'
 import { signAccessToken, signRefreshToken, verifyRefreshToken } from '../utils/jwt.js'
 import { IUser, AuthResponse } from '../types/user.types.js'
 
@@ -62,7 +62,48 @@ async function refreshAccessToken(refreshToken: string): Promise<string | null> 
   }
 }
 
+async function bootstrapRegisterAdmin(name: string, email: string, password: string): Promise<AuthResponse | null> {
+  const adminExists = await hasAnyAdmin()
+
+  if (adminExists) {
+    return null
+  }
+
+  const user = await create({
+    name,
+    email,
+    password,
+    role: 'admin'
+  })
+
+  const accessToken = signAccessToken({ userId: user._id, role: user.role })
+  const refreshToken = signRefreshToken({ userId: user._id })
+
+  const userWithoutPassword = {
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+    isActive: user.isActive,
+    lastLoginAt: user.lastLoginAt,
+    createdAt: user.createdAt,
+    updatedAt: user.updatedAt
+  }
+
+  return {
+    user: userWithoutPassword,
+    accessToken,
+    refreshToken
+  }
+}
+
+async function getBootstrapStatus(): Promise<boolean> {
+  return hasAnyAdmin()
+}
+
 export {
   login,
-  refreshAccessToken
+  refreshAccessToken,
+  bootstrapRegisterAdmin,
+  getBootstrapStatus
 }

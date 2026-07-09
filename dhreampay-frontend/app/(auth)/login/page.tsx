@@ -1,16 +1,27 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import Link from 'next/link';
+import { checkBootstrapStatus } from '../../lib/api/auth';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [showRegisterLink, setShowRegisterLink] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    checkBootstrapStatus().then((response) => {
+      setShowRegisterLink(response.data?.adminExists === false);
+    }).catch(() => {
+      setShowRegisterLink(false);
+    });
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -78,6 +89,13 @@ export default function LoginPage() {
             {loading ? 'Signing in...' : 'Sign In'}
           </button>
         </form>
+        {showRegisterLink && (
+          <div className="mt-4 text-center">
+            <Link href="/register" className="text-sm text-slate-500 hover:text-[#1e3a5f]">
+              First time setup? Create admin account
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

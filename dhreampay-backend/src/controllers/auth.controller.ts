@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { login, refreshAccessToken } from '../services/auth.service.js'
+import { login, refreshAccessToken, bootstrapRegisterAdmin, getBootstrapStatus } from '../services/auth.service.js'
 import { findById } from '../repositories/user.repository.js'
 import { Types } from 'mongoose'
 
@@ -87,8 +87,37 @@ async function meHandler(req: Request, res: Response): Promise<Response> {
   })
 }
 
+async function bootstrapRegisterHandler(req: Request, res: Response): Promise<Response> {
+  const { name, email, password } = req.body
+
+  const result = await bootstrapRegisterAdmin(name, email, password)
+
+  if (result === null) {
+    return res.status(403).json({
+      success: false,
+      message: 'An admin account already exists. Registration is disabled. Contact your administrator for access.'
+    })
+  }
+
+  return res.status(201).json({
+    success: true,
+    data: result
+  })
+}
+
+async function bootstrapStatusHandler(req: Request, res: Response): Promise<Response> {
+  const adminExists = await getBootstrapStatus()
+
+  return res.status(200).json({
+    success: true,
+    data: { adminExists }
+  })
+}
+
 export {
   loginHandler,
   refreshHandler,
-  meHandler
+  meHandler,
+  bootstrapRegisterHandler,
+  bootstrapStatusHandler
 }
