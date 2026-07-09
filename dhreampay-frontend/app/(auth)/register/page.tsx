@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { checkBootstrapStatus, bootstrapRegister } from '../../lib/api/auth';
+import { checkBootstrapStatus, bootstrapRegister } from '@/lib/api/auth';
 
 export default function RegisterPage() {
   const [name, setName] = useState('');

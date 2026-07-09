@@ -5,7 +5,7 @@ import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { checkBootstrapStatus } from '../../lib/api/auth';
+import { checkBootstrapStatus } from '@/lib/api/auth';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');

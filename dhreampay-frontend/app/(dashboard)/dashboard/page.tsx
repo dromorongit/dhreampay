@@ -1,10 +1,10 @@
-import { auth } from '../../../lib/auth/authOptions';
+import { auth } from '@/lib/auth/authOptions';
 import { redirect } from 'next/navigation';
 import { FileText, ArrowLeftRight, CheckCircle, AlertTriangle } from 'lucide-react';
-import { getDashboardSummary } from '../../../lib/api/reporting';
-import { StatsCard } from '../../../components/dashboard/StatsCard';
-import { RecentBatches } from '../../../components/dashboard/RecentBatches';
-import { OpenExceptions } from '../../../components/dashboard/OpenExceptions';
+import { getDashboardSummary } from '@/lib/api/reporting';
+import { StatsCard } from '@/components/dashboard/StatsCard';
+import { RecentBatches } from '@/components/dashboard/RecentBatches';
+import { OpenExceptions } from '@/components/dashboard/OpenExceptions';
 
 export default async function DashboardPage() {
   const session = await auth();
