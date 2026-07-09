@@ -12,7 +12,7 @@ interface HeaderProps {
 
 export function Header({ pageTitle = 'Dashboard', userName, userEmail, onMenuClick }: HeaderProps) {
   return (
-    <header className="h-16 bg-[#1e3a5f] border-b border-[rgba(255,255,255,0.1)] flex items-center justify-between w-full px-4 sm:px-6">
+    <header className="h-16 bg-[#1e3a5f] border-b border-[rgba(255,255,255,0.1)] flex items-center justify-between w-full px-4 sm:px-6 sticky top-0 z-20">
       <div className="flex items-center gap-4">
         {onMenuClick && (
           <button

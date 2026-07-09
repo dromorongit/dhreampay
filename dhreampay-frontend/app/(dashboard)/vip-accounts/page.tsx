@@ -157,20 +157,20 @@ export default function VIPAccountsPage() {
             <label className="text-sm font-medium text-slate-700" htmlFor="tier-filter">
               Tier
             </label>
-            <select
-              id="tier-filter"
-              value={tierFilter}
-              onChange={(e) => {
-                setTierFilter(e.target.value);
-                setPage(1);
-              }}
-              className="px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white"
-            >
-              <option value="">All</option>
-              <option value="platinum">Platinum</option>
-              <option value="gold">Gold</option>
-              <option value="silver">Silver</option>
-            </select>
+<select
+               id="tier-filter"
+               value={tierFilter}
+               onChange={(e) => {
+                 setTierFilter(e.target.value);
+                 setPage(1);
+               }}
+               className="px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1e3a5f] bg-white text-slate-900"
+             >
+               <option value="" className="text-slate-900">All</option>
+               <option value="platinum" className="text-slate-900">Platinum</option>
+               <option value="gold" className="text-slate-900">Gold</option>
+               <option value="silver" className="text-slate-900">Silver</option>
+             </select>
           </div>
 
           <div className="flex items-center gap-2">
