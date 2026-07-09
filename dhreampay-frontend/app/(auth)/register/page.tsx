@@ -40,7 +40,7 @@ export default function RegisterPage() {
 
     try {
       const response = await bootstrapRegister(name, email, password);
-      const { accessToken, refreshToken, user } = response.data ?? {};
+      const { accessToken, refreshToken } = response.data ?? {};
 
       if (accessToken && refreshToken) {
         await signIn('credentials', {
